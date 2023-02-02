@@ -1,0 +1,26 @@
+{
+  "name": "memesbot",
+  "version": "2.2.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node ./src/app.js",
+    "load": "node ./src/utils/cargarCmds.js"
+  },
+  "keywords": [],
+  "author": "TheNochtgamer",
+  "license": "ISC",
+  "dependencies": {
+    "@discordjs/builders": "^0.15.0",
+    "@discordjs/rest": "^0.5.0",
+    "discord-api-types": "^0.35.0",
+    "discord.js": "^13.8.1",
+    "dotenv": "^16.0.1",
+    "moment": "^2.29.3",
+    "moment-timezone": "^0.5.34",
+    "mysql": "^2.18.1",
+    "mysql2": "^2.3.3",
+    "randomcolor": "^0.6.2",
+    "sequelize": "^6.21.6"
+  }
+}
