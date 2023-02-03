@@ -10,7 +10,7 @@ async function sendWebHook(channel, options) {
     let webhook = webhooks.find((wh) => wh.token);
 
     if (!webhook) {
-        webhook = await channel.createWebhook("Memehook");
+        webhook = await channel.createWebhook("Memeshook");
     }
 
     return webhook.send(options).then((message) => {

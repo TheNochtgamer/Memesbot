@@ -12,7 +12,7 @@ function sendHash(message, message2) {
     const msg2id = message2?.id;
 
     for (let index = 0; index < message.attachments?.size; index++) {
-        https.get(message.attachments.at(index).proxyURL, (res) => {
+        https.get(message.attachments.at(index).url, (res) => {
             let hash = crypto.createHash('sha256');
             let hashDiges = '';
             hash.setEncoding('hex');
@@ -22,13 +22,12 @@ function sendHash(message, message2) {
                 hash.end();
                 hashDiges = hash.read();
                 if (!hashDiges) return;
-                // let sql = msg2id ? "INSERT IGNORE INTO `hashes` (`hash`, `msg_id`) VALUES ('" + hashDiges + "', '" + msg2id + "')" : "INSERT IGNORE INTO `hashes` (`hash`) VALUES ('" + hashDiges + "')";
 
                 try {
                     const sequelize = require('../../database');
                     const Hashes = require('../../database/models/hashes')(sequelize);
 
-                    Hashes.create({
+                    await Hashes.create({
                         hash: hashDiges,
                         msg_id: msg2id
                     }, { ignoreDuplicates: true });

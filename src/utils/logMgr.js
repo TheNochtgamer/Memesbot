@@ -2,52 +2,25 @@ const { Client, MessageEmbed } = require('discord.js');
 const randomColor = require('randomcolor');
 
 module.exports = class LogMgr {
-
     /**
      * 
-     * @param {Client} bot 
+     * @param {Client} client 
      */
-    async set(bot) {
-        this.bot = bot;
-        this.mainGuild = this.bot.guilds.cache.get(process.env.GUILDID);
-        if (confi?.logChannelId) {
-            if (confi.logChannelId.length == 18 && !isNaN(confi.logChannelId)) {
-                this.logCh = await this.bot.channels.fetch(confi.logChannelId);
-                if (this.logCh.viewable) {
-                    console.log('Canal de logs establecido');
-                } else {
-                    console.log('Warn: Canal de logs establecido pero el bot no puede utilizarlo');
-                }
-            } else {
-                console.log('Warn: Canal de logs establecido pero invalido');
-            }
-        } else {
-            console.log('Warn: Canal de logs no establecido');
-        }
+    async set(client) {
+        this.client = client;
+        this.mainGuild = this.client.guilds.cache.get(process.env.GUILDID);
+
+        this.checkLogCh();
     }
 
-    /**
-     * @returns {boolean}
-     */
     async checkLogCh() {
-        if (confi.logChannelId) {
-            if (confi.logChannelId.length == 18 && !isNaN(confi.logChannelId)) {
-                this.logCh = await this.bot.channels.fetch(confi.logChannelId);
-                if (this.logCh.viewable) {
-                    console.log('Canal de logs establecido');
-                    return true;
-                } else {
-                    console.log('Warn: Canal de logs establecido pero el bot no puede utilizarlo');
-                    return false;
-                }
-            } else {
-                console.log('Warn: Canal de logs establecido pero invalido');
-                return false;
-            }
-        } else {
-            console.log('Warn: Canal de logs no establecido');
-            return false;
-        }
+        if (!confi?.logChannelId) return console.log('Warn: Canal de logs no establecido');
+        if (confi.logChannelId.length < 18 || isNaN(confi.logChannelId)) return console.log('Warn: Canal de logs establecido pero invalido');
+        
+        this.logCh = await this.client.channels.fetch(confi.logChannelId);
+        if (!this.logCh.viewable) return console.log('Warn: Canal de logs establecido pero el bot no puede utilizarlo');
+        console.log('Canal de logs establecido');
+        return true;
     }
 
     /**

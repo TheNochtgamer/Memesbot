@@ -10,7 +10,7 @@ module.exports = async function noauthreply(interaction) {
         .setAuthor({ name: '⛔Prohibido'})
         .setDescription('```' + interaction.user.tag + ' no tenes permisos para usar este comando.```')
         .setTimestamp()
-        .setFooter({ text: `ID: ${interaction.user.id}` });
+        .setFooter({ text: interaction.client.user.username });
 
     try {
         if (interaction.deferred || interaction.replied) {

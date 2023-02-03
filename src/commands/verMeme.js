@@ -90,7 +90,7 @@ module.exports = {
                 { name: 'Verificado por:', value: `<@!${result.mod_id}> [${result.mod_id}]`, inline: false },
                 { name: 'Verificado el:', value: `${msgTimestamp.format('DD/MM/YY HH:mm')}\n<t:${msgTimestamp.unix()}:R>`, inline: true },
             )
-            .setFooter({ text: `ID: ${targetId}` })
+            .setFooter({ text: interaction.client.user.username })
             .setTimestamp();
 
         if (result.created) {
@@ -138,7 +138,7 @@ module.exports = {
                     .setColor('DARK_RED')
                     .setTitle('Hashes en este mensaje')
                     .setDescription(hashes || 'Ningun hash fue creado a partir de este mensaje.')
-                    .setFooter({ text: `ID: ${targetId}` })
+                    .setFooter({ text: interaction.client.user.username })
                     .setTimestamp();
 
                 await butInteraction.reply({ embeds: [embed2], ephemeral: true });

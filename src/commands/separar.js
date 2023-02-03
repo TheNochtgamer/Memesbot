@@ -15,27 +15,30 @@ module.exports = {
      */
     async run(interaction) {
         const guild = interaction.guild;
+        const endChannel = guild.channels.cache.get(confi.channelEndId);
 
-        if (!(confi.channelEndId)) {
+        if (!endChannel) {
             await interaction.reply({ content: `No existe el canal de memes`, ephemeral: true });
             return;
         };
 
-        if (!(confi.channelEndId == interaction.channelId)) {
+        if (confi.channelEndId !== interaction.channelId) {
             await interaction.reply({ content: 'Este comando solo se puede usar en el canal de memes' + (confi.channelEndId ? `: <#${confi.channelEndId}>` : ''), ephemeral: true });
             return;
         }
 
-        const endChannel = guild.channels.cache.find(canal => canal.id == confi.channelEndId);
         const separador = "-----------------------";
         const stampSeparador = "_ _                                    ";
         const date = fixMoment(moment());
         const stream = ` Stream ${date.format('DD/MM')} `;
         const tStamp = `<t:${date.unix()}:R>`;
+        const line = separador + stream + separador + '\n' + stampSeparador + '[' + tStamp + ']';
 
         try {
-            await endChannel.send(separador + stream + separador + '\n' + stampSeparador + '[' + tStamp + ']');
-            await interaction.reply({ content: 'Mensaje enviado', ephemeral: true });
+            await Promise.all(
+                endChannel.send({'content': line}),
+                interaction.reply({ content: 'Mensaje enviado', ephemeral: true }),
+            )
         } catch (error) {
             console.log('Hubo un error al intentar enviar un mensaje al canal de memes:', error);
             await interaction.reply({ content: 'No se pudo enviar el mensaje', ephemeral: true });

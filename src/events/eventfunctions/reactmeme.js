@@ -16,46 +16,42 @@ module.exports = async function reactmeme(message) {
     if (!confi.addReaction || confi.channelStartId !== message.channel.id || !endChannel || cantidad <= 0) return;
 
     let isRecycled = (async (sended = false) => {
-        if (!message.attachments.at(0) || !confi.memeRepetidoReact) return;
+        if (!message.attachments.at(0) || !confi.memeRepetidoReact) return false;
         for (let index = 0; index < message.attachments.size && !sended; index++) {
-            await (() => {
-                return new Promise(resolve => {
-                    https.get(message.attachments.at(index).proxyURL, (res) => {
-                        let hash = crypto.createHash('sha256');
-                        let hashDiges = '';
-                        hash.setEncoding('hex');
-                        res.pipe(hash);
+            await new Promise(resolve => {
+                https.get(message.attachments.at(index).url, (res) => {
+                    let hash = crypto.createHash('sha256');
+                    let hashDiges = '';
+                    hash.setEncoding('hex');
+                    res.pipe(hash);
 
-                        res.on('end', async () => {
-                            hash.end();
-                            hashDiges = hash.read();
-                            if (!hashDiges) return resolve();
-                            // let sql = "SELECT * FROM `hashes` WHERE `hash` = '" + hashDiges + "'";
-
-                            let res2;
-                            try {
-                                const sequelize = require('../../database');
-                                const Hashes = require('../../database/models/hashes')(sequelize);
-                                res2 = await Hashes.findOne({
-                                    where: {
-                                        hash: hashDiges
-                                    }
-                                });
-                            } catch (error) {
-                                console.log("Hubo un error al intentar leer la base de datos:", error);
-                                return resolve();
-                            }
-
-                            if (res2?.hash !== hashDiges) return resolve();
-
-                            try {
-                                sended = true;
-                            } catch (error) { }
+                    res.on('end', async () => {
+                        hash.end();
+                        hashDiges = hash.read();
+                        if (!hashDiges) return resolve();
+                        let res2;
+                        try {
+                            const sequelize = require('../../database');
+                            const Hashes = require('../../database/models/hashes')(sequelize);
+                            res2 = await Hashes.findOne({
+                                where: {
+                                    hash: hashDiges
+                                }
+                            });
+                        } catch (error) {
+                            console.log("Hubo un error al intentar leer la base de datos:", error);
                             return resolve();
-                        });
-                    })
-                });
-            })();
+                        }
+
+                        if (res2?.hash !== hashDiges) return resolve();
+
+                        try {
+                            sended = true;
+                        } catch (error) { }
+                        return resolve();
+                    });
+                })
+            });
         }
         return sended;
     })();
@@ -73,6 +69,7 @@ module.exports = async function reactmeme(message) {
         // Nunca se utilizo, aunque funcional
         // if (!(canManageMessages || memberModRole || canMuteHim)) await message.react("⏲️");
 
+        if (await isRecycled) await message.react("♻️");
         if (!confi.numericReact) return;
         switch (cantidad) {
             case 1:
@@ -94,7 +91,4 @@ module.exports = async function reactmeme(message) {
                 break;
         }
     } catch (error) { }
-    if (await isRecycled) await message.react("♻️");
-
-    return;
 };

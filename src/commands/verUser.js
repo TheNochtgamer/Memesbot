@@ -20,7 +20,7 @@ module.exports = {
         const embed = new MessageEmbed()
             .setDescription('Buscando en la base de datos...')
             .setColor(randomColor())
-            .setFooter({ text: userId })
+            .setFooter({ text: interaction.client.user.username })
             .setTimestamp();
 
         if (!userId) {
