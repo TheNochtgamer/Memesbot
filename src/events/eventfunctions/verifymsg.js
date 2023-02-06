@@ -47,7 +47,7 @@ module.exports = async function verifymsg(reaction, user) {
         logme.log(`${user.tag} no tiene permisos para añadir reacciones en el canal ${channel.name}`,
             `<@${user.id}> no tiene permisos para añadir reacciones en el canal <#${channel.id}>`, user.id, '#FF0000');
 
-        let replyMsg = await channel.send({ content: `<@${user.id}>`, embeds: [embed], components: [botonTimeout] });
+        let replyMsg = await channel.send({ content: `<@${user.id}>`, embeds: [errEmbed], components: [botonTimeout] });
         setTimeout(async _ => {
             try {
                 if (replyMsg.deletable) await replyMsg.delete();
@@ -82,8 +82,9 @@ module.exports = async function verifymsg(reaction, user) {
     if (!(reactEName == "✅" || reactEName == "👍" || eNames.approved.includes(reactEName))) return;
 
     if (!confi.channelOpen) {
+        errEmbed.setDescription('El canal de memes esta cerrado ❌');
         let promises = [reaction.users.remove(member.id)];
-        if (confi.replyMsg && client.timerAvailable()) promises.push(channel.send({ content: `<@${user.id}>`, embeds: [embed] }));
+        if (confi.replyMsg && client.timerAvailable()) promises.push(channel.send({ content: `<@${user.id}>`, embeds: [errEmbed] }));
         let values = await Promise.allSettled(promises);
 
         if (values.at(1)?.value) {
