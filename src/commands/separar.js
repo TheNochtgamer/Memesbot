@@ -35,10 +35,10 @@ module.exports = {
         const line = separador + stream + separador + '\n' + stampSeparador + '[' + tStamp + ']';
 
         try {
-            await Promise.all(
-                endChannel.send({'content': line}),
+            await Promise.all([
+                endChannel.send({ 'content': line }),
                 interaction.reply({ content: 'Mensaje enviado', ephemeral: true }),
-            )
+            ])
         } catch (error) {
             console.log('Hubo un error al intentar enviar un mensaje al canal de memes:', error);
             await interaction.reply({ content: 'No se pudo enviar el mensaje', ephemeral: true });

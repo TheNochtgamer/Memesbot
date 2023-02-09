@@ -25,7 +25,6 @@ module.exports = {
             return;
         };
 
-        confi.channelOpen = !confi.channelOpen;
         if (confi.channelOpen) {
             interaction.reply({ content: `Canal de <#${confi.channelEndId}> cerrado`, ephemeral: true });
             //----------------------- Stream 05/05 -----------------------
@@ -44,6 +43,7 @@ module.exports = {
         } else {
             interaction.reply({ content: `Canal de <#${confi.channelEndId}> abierto`, ephemeral: true });
         }
+        confi.channelOpen = !confi.channelOpen;
 
         let sRes = await configMgr.save();
         if (sRes.success) {
