@@ -24,8 +24,9 @@ module.exports = {
             await interaction.reply({ content: `No existe el canal de memes`, ephemeral: true });
             return;
         };
+        confi.channelOpen = !confi.channelOpen;
 
-        if (confi.channelOpen) {
+        if (!confi.channelOpen) {
             interaction.reply({ content: `Canal de <#${confi.channelEndId}> cerrado`, ephemeral: true });
             //----------------------- Stream 05/05 -----------------------
             const separador = '-----------------------';
@@ -43,7 +44,6 @@ module.exports = {
         } else {
             interaction.reply({ content: `Canal de <#${confi.channelEndId}> abierto`, ephemeral: true });
         }
-        confi.channelOpen = !confi.channelOpen;
 
         let sRes = await configMgr.save();
         if (sRes.success) {
@@ -54,7 +54,7 @@ module.exports = {
 
         await Promise.allSettled([
             endChannel.permissionOverwrites.edit(interaction.guild.roles.everyone, { 'ADD_REACTIONS': confi.channelOpen ? null : false }),
-            endChannel.edit({ topic: `${confi.channelOpen ? 'Abierto' : 'Cerrado'} | <@` + process.env.CLIENTID + '>' }, 'Actualizacion del canal de memes'),
+            endChannel.edit({ topic: `${confi.channelOpen ? 'Abierto' : 'Cerrado'} | <@${process.env.CLIENTID}>` }, 'Actualizacion del canal de memes'),
         ]);
     }
 }
