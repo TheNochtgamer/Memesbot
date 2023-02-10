@@ -52,7 +52,6 @@ module.exports = {
 
         await interaction.reply({ content: `Buscando mensaje...`, ephemeral: true });
         let interactionReply = await interaction.fetchReply();
-        //const sql = "SELECT * FROM `memes` WHERE `msg_id`='" + var0 + "'";
 
         let result;
         try {
@@ -64,15 +63,14 @@ module.exports = {
                 },
                 raw: true
             });
-            //result = await getSql(sql);
         } catch (error) {
             console.log("Hubo un error al intentar leer la base de datos:", error)
-            interaction.editReply({ content: `Hubo un error al intentar leer la base de datos`, ephemeral: true });
+            interaction.editReply({ 'content': `Hubo un error al intentar leer la base de datos`, ephemeral: true });
             return;
         }
 
         if (!result) {
-            interaction.editReply({ content: `No se encontro el mensaje en la base de datos`, ephemeral: true });
+            interaction.editReply({ 'content': `No se encontro el mensaje en la base de datos`, ephemeral: true });
             return;
         }
 
@@ -97,28 +95,28 @@ module.exports = {
                 (interaction.user.id == interaction.client.owner ? hashBut : '')
             );
         const filter = i => i.user.id === interaction.user.id && i.message.id == interactionReply.id;
-        const collector = interaction.channel.createMessageComponentCollector({ filter, time: 15 * 60 * 1000 });
+        const collector = interaction.channel.createMessageComponentCollector({ filter, 'time': 15 * 60 * 1000 });
 
         const embed = new MessageEmbed()
             .setColor(randomColor())
             .setTitle('Ver Meme')
             .addFields(
-                { name: 'Enviado por:', value: `<@!${result.user_id}> [${result.user_id}]`, inline: false },
-                { name: 'Verificado por:', value: `<@!${result.mod_id}> [${result.mod_id}]`, inline: false },
-                { name: 'Verificado el:', value: `${msgTimestamp.format('DD/MM/YY HH:mm')}\n<t:${msgTimestamp.unix()}:R>`, inline: true },
+                { 'name': 'Enviado por:', 'value': `<@!${result.user_id}> [${result.user_id}]`, 'inline': false },
+                { 'name': 'Verificado por:', 'value': `<@!${result.mod_id}> [${result.mod_id}]`, 'inline': false },
+                { 'name': 'Verificado el:', 'value': `${msgTimestamp.format('DD/MM/YY HH:mm')}\n<t:${msgTimestamp.unix()}:R>`, 'inline': true },
             )
             .setFooter({ text: interaction.client.user.username })
             .setTimestamp();
 
         if (result.created) {
-            embed.addField('Enviado el:', `${msgCreatedTimestamp.format('DD/MM/YY HH:mm')}\n<t:${msgCreatedTimestamp.unix()}:R>`, true);
+            embed.addFields({ 'name': 'Enviado el:', 'value': `${msgCreatedTimestamp.format('DD/MM/YY HH:mm')}\n<t:${msgCreatedTimestamp.unix()}:R>`, 'inline': true });
         }
-        if (interaction.member.id == interaction.client.owner) {
-            embed.addField('databaseID', 'ID=' + result.ID, false);
+        if (interaction.member.id === interaction.client.owner) {
+            embed.addFields({ 'name': 'databaseID', 'value': 'ID=' + result.ID, 'inline': false});
         };
 
         try {
-            await interaction.editReply({ content: '_ _', embeds: [embed], ephemeral: true, components: [botonera] });
+            await interaction.editReply({ 'content': '_ _', 'embeds': [embed], 'ephemeral': true, 'components': [botonera] });
         } catch (error) {
             console.log('Hubo un error al intentar responder un msg:', error)
             return;
@@ -126,9 +124,9 @@ module.exports = {
 
         collector.on('collect', async butInteraction => {
             if (butInteraction.customId == userBut.customId) {
-                await butInteraction.reply({ content: `<@!${result.user_id}>`, ephemeral: true });
+                await butInteraction.reply({ 'content': `<@!${result.user_id}>`, 'ephemeral': true });
             } else if (butInteraction.customId == modBut.customId) {
-                await butInteraction.reply({ content: `<@!${result.mod_id}>`, ephemeral: true });
+                await butInteraction.reply({ 'content': `<@!${result.mod_id}>`, 'ephemeral': true });
             } else {
                 let res;
                 try {
@@ -141,7 +139,7 @@ module.exports = {
                         raw: true
                     });
                 } catch (error) {
-                    await butInteraction.reply({ content: 'Hubo un error al intentar leer la base de datos', ephemeral: true });
+                    await butInteraction.reply({ 'content': 'Hubo un error al intentar leer la base de datos', ephemeral: true });
                     return;
                 }
 
@@ -154,7 +152,7 @@ module.exports = {
                     .setColor('DARK_RED')
                     .setTitle('Hashes en este mensaje')
                     .setDescription(hashes || 'Ninguno fue creado a partir de este mensaje.')
-                    .setFooter({ text: interaction.client.user.username })
+                    .setFooter({ 'text': interaction.client.user.username })
                     .setTimestamp();
 
                 await butInteraction.reply({ embeds: [embed2], ephemeral: true });

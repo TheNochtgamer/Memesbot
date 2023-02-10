@@ -141,7 +141,7 @@ module.exports = {
             );
         }
         if (res1.length != 0) {
-            if (res.length != 0) embed.addField('_ _', '_ _');
+            if (res.length != 0) embed.addFields({'name': '_ _', 'value': '_ _'});
             let lastMoment, first = false;
             res1.forEach(data => {
                 const verified = fixMoment(moment(data.verified));

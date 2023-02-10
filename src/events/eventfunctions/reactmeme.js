@@ -19,7 +19,7 @@ module.exports = async function reactmeme(message) {
         if (!message.attachments.at(0) || !confi.memeRepetidoReact) return false;
         for (let index = 0; index < message.attachments.size && !sended; index++) {
             await new Promise(resolve => {
-                https.get(message.attachments.at(index).url, (res) => {
+                https.get(message.attachments.at(index).proxyURL, (res) => {
                     let hash = crypto.createHash('sha256');
                     let hashDiges = '';
                     hash.setEncoding('hex');

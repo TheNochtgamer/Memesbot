@@ -29,7 +29,7 @@ module.exports = {
             .setDescription(reply)
             .setColor(randomColor());
         if (replyOff) embed
-            .addField('Bots offline:', replyOff, false);
+            .addFields({ 'name': 'Bots offline:', 'value': replyOff, 'inline': false });
         await interaction.reply({ embeds: [embed], ephemeral: false });
     },
 };

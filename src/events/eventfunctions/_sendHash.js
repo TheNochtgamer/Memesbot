@@ -12,7 +12,7 @@ function sendHash(message, message2) {
     const msg2id = message2?.id;
 
     for (let index = 0; index < message.attachments?.size; index++) {
-        https.get(message.attachments.at(index).url, (res) => {
+        https.get(message.attachments.at(index).proxyURL, (res) => {
             let hash = crypto.createHash('sha256');
             let hashDiges = '';
             hash.setEncoding('hex');
