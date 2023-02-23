@@ -8,7 +8,7 @@ module.exports = {
         .setName('stats')
         .setDescription('Ver las estadisticas de memes')
         .addStringOption(option => option
-            .setName('despues')
+            .setName('durante')
             .setDescription('Hace cuanto tiempo se mostraran las estadisticas') // TODO cambiar la descripcion y el nombre por otra cosa mas entendible
             .setChoices(
                 { 'name': '24h', 'value': '1' },

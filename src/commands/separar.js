@@ -22,11 +22,6 @@ module.exports = {
             return;
         };
 
-        if (confi.channelEndId !== interaction.channelId) {
-            await interaction.reply({ content: 'Este comando solo se puede usar en el canal de memes' + (confi.channelEndId ? `: <#${confi.channelEndId}>` : ''), ephemeral: true });
-            return;
-        }
-
         const separador = "-----------------------";
         const stampSeparador = "_ _                                    ";
         const date = fixMoment(moment());
