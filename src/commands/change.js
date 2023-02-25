@@ -6,6 +6,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('change')
 		.setDescription('Dev')
+        .setDefaultMemberPermissions(PFlags.ADMINISTRATOR)
 		.addSubcommand((subcommand) =>
 			subcommand
 				.setName("set")

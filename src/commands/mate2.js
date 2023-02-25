@@ -9,7 +9,7 @@ module.exports = {
             option.setName('user')
                 .setDescription('Darle un mate a esta persona')
                 .setRequired(true)),
-    roles_req: ['941908888113008741', '803293274672332880', '898615642389897296', '617380124106555392', '777691011316449291'],
+    // roles_req: ['941908888113008741', '803293274672332880', '898615642389897296', '617380124106555392', '777691011316449291'],
     /**
      * @param {CommandInteraction} interaction 
      */

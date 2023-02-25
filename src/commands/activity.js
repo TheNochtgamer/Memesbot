@@ -6,6 +6,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('activity')
         .setDescription('Establece la actividad actual del bot')
+        .setDefaultMemberPermissions(PFlags.MANAGE_MESSAGES)
         .addSubcommand((subcommand) =>
             subcommand
                 .setName("set")
@@ -29,7 +30,7 @@ module.exports = {
             subcommand
                 .setName("reset")
                 .setDescription("Borra la actividad actual del bot")),
-    perms_req: ['MANAGE_MESSAGES'],
+    // perms_req: ['MANAGE_MESSAGES'],
     /**
      * 
      * @param {CommandInteraction} interaction 

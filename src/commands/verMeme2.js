@@ -20,12 +20,13 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('checkmeme')
         .setDescription('Comando para revisar un meme verificado')
+        .setDefaultMemberPermissions(PFlags.MANAGE_MESSAGES)
         .addStringOption(option =>
             option.setName('id')
                 .setDescription('El id del mensaje para revisar')
                 .setRequired(true)),
-    roles_req: [confi.monderatorId, '804900054153560084'],
-    perms_req: ['MANAGE_MESSAGES'],
+    // roles_req: [confi.monderatorId, '804900054153560084'],
+    // perms_req: ['MANAGE_MESSAGES'],
     /**
      * @param {CommandInteraction} interaction 
      * @returns 
@@ -112,7 +113,7 @@ module.exports = {
             embed.addFields({ 'name': 'Enviado el:', 'value': `${msgCreatedTimestamp.format('DD/MM/YY HH:mm')}\n<t:${msgCreatedTimestamp.unix()}:R>`, 'inline': true });
         }
         if (interaction.member.id === interaction.client.owner) {
-            embed.addFields({ 'name': 'databaseID', 'value': 'ID=' + result.ID, 'inline': false});
+            embed.addFields({ 'name': 'databaseID', 'value': 'ID=' + result.ID, 'inline': false });
         };
 
         try {

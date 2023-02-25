@@ -25,6 +25,7 @@ const client = new Discord.Client({
 // globalThis.test = client;
 globalThis.confi = require('./config.json');
 globalThis.logme = new LogMgr();
+globalThis.PFlags = Discord.Permissions.FLAGS;
 client.totalInteractions = 0;
 client.totalSuccessfullyInteractions = 0;
 client.commands = new Discord.Collection();

@@ -1,8 +1,11 @@
+require("dotenv").config();
 const fs = require('fs');
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
-require("dotenv").config();
+const { Permissions } = require('discord.js');
+
 globalThis.confi = require('../config.json');
+globalThis.PFlags = Permissions.FLAGS;
 
 const commands = [];
 console.log('[P] Leyendo archivos...');

@@ -6,6 +6,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('embed')
         .setDescription('Comando para crear y enviar un embed')
+        .setDefaultMemberPermissions(PFlags.MANAGE_MESSAGES)
         .addStringOption(option => option
             .setName('title')
             .setDescription('Titulo'))
@@ -37,7 +38,7 @@ module.exports = {
             .setName('url')
             .setDescription('Url'))
     ,
-    perms_req: ['MANAGE_MESSAGES'],
+    // perms_req: ['MANAGE_MESSAGES'],
     /**
      * @param {CommandInteraction} interaction 
      * @returns 

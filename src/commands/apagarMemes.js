@@ -7,11 +7,12 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('bloquear')
         .setDescription('Bloquea el canal de memes sin que nadie pueda verificar mas memes')
+        .setDefaultMemberPermissions(PFlags.MANAGE_MESSAGES)
         .addSubcommand(subcommand =>
             subcommand.setName("memes")
                 .setDescription('Bloquea el canal de memes sin que nadie pueda verificar mas memes')),
-    roles_req: [confi.monderatorId],
-    perms_req: ['MANAGE_MESSAGES'],
+    // roles_req: [confi.monderatorId],
+    // perms_req: ['MANAGE_MESSAGES'],
     /**
      * @param {CommandInteraction} interaction 
      * @returns 

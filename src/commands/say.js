@@ -5,6 +5,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('say')
 		.setDescription('Enviar mensajes')
+        .setDefaultMemberPermissions(PFlags.MANAGE_MESSAGES)
 		.addStringOption(option =>
 			option.setName('mensaje')
 				.setDescription('Mensaje a enviar')
@@ -15,8 +16,8 @@ module.exports = {
 		.addStringOption(option =>
 			option.setName('reply')
 				.setDescription('ID de un mensaje cualquiera para responder')),
-	roles_req: [confi.monderatorId],
-	perms_req: ['MANAGE_MESSAGES'],
+	// roles_req: [confi.monderatorId],
+	// perms_req: ['MANAGE_MESSAGES'],
 	/**
 	 * @param {CommandInteraction} interaction 
 	 * @returns 

@@ -19,9 +19,11 @@ const { getSql, fixMoment } = require('../utils');
 module.exports = {
     data: new ContextMenuCommandBuilder()
         .setName('Check Meme')
-        .setType(3),
-    roles_req: [confi.monderatorId, '804900054153560084'],
-    perms_req: ['MANAGE_MESSAGES'],
+        .setType(3)
+        .setDefaultMemberPermissions(PFlags.MANAGE_MESSAGES)
+    ,
+    // roles_req: [confi.monderatorId, '804900054153560084'],
+    // perms_req: ['MANAGE_MESSAGES'],
     /**
      * @param {ContextMenuInteraction} interaction 
      * @returns 

@@ -4,12 +4,12 @@ const moment = require('moment');
 const { fixMoment } = require('../utils');
 
 module.exports = {
-    raw: true,
     data: new SlashCommandBuilder()
         .setName('separar')
-        .setDescription('Comando para poner separacion en el canal de memes'),
-    roles_req: [confi.monderatorId, '804900054153560084'],
-    perms_req: ['MANAGE_MESSAGES'],
+        .setDescription('Comando para poner separacion en el canal de memes')
+        .setDefaultMemberPermissions(PFlags.MANAGE_MESSAGES),
+        // roles_req: [confi.monderatorId, '804900054153560084'],
+    // perms_req: ['MANAGE_MESSAGES'],
     /**
      * @param {CommandInteraction} interaction 
      */

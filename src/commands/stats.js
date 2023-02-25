@@ -7,6 +7,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('stats')
         .setDescription('Ver las estadisticas de memes')
+        .setDefaultMemberPermissions(PFlags.MANAGE_MESSAGES)
         .addStringOption(option => option
             .setName('durante')
             .setDescription('Hace cuanto tiempo se mostraran las estadisticas') // TODO cambiar la descripcion y el nombre por otra cosa mas entendible
@@ -15,7 +16,7 @@ module.exports = {
                 { 'name': '7d', 'value': '7' }
             ))
     ,
-    perms_req: ['MANAGE_MESSAGES'],
+    // perms_req: ['MANAGE_MESSAGES'],
     /**
      * @param {CommandInteraction} interaction 
      */

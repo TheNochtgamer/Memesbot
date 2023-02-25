@@ -8,11 +8,12 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('checkuser')
         .setDescription('Comando para ver la estadisticas de alguien')
+        .setDefaultMemberPermissions(PFlags.MANAGE_MESSAGES)
         .addUserOption(option => option.setName('user')
             .setRequired(true)
             .setDescription("Miembro a ver las estadisticas")),
-    roles_req: [confi.monderatorId, '804900054153560084'],
-    perms_req: ['MANAGE_MESSAGES'],
+    // roles_req: [confi.monderatorId, '804900054153560084'],
+    // perms_req: ['MANAGE_MESSAGES'],
     /**
      * @param {CommandInteraction} interaction 
      * @returns 

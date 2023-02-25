@@ -7,9 +7,11 @@ const randomColor = require('randomcolor');
 module.exports = {
     data: new ContextMenuCommandBuilder()
         .setName('Check User')
-        .setType(2),
-    roles_req: [confi.monderatorId, '804900054153560084'],
-    perms_req: ['MANAGE_MESSAGES'],
+        .setType(2)
+        .setDefaultMemberPermissions(PFlags.MANAGE_MESSAGES)
+    ,
+    // roles_req: [confi.monderatorId, '804900054153560084'],
+    // perms_req: ['MANAGE_MESSAGES'],
     /**
      * @param {ContextMenuInteraction} interaction 
      * @returns 
@@ -141,7 +143,7 @@ module.exports = {
             );
         }
         if (res1.length != 0) {
-            if (res.length != 0) embed.addFields({'name': '_ _', 'value': '_ _'});
+            if (res.length != 0) embed.addFields({ 'name': '_ _', 'value': '_ _' });
             let lastMoment, first = false;
             res1.forEach(data => {
                 const verified = fixMoment(moment(data.verified));
