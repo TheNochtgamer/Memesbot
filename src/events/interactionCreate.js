@@ -2,24 +2,29 @@ const { Interaction } = require('discord.js');
 const { notAuthorized } = require('../utils');
 
 module.exports = {
-    name: 'interactionCreate',
-    /**
-     * @param {Interaction} interaction 
-     * @returns 
-     */
-    async run(interaction) {
-        if (!(interaction.isCommand() || interaction.isApplicationCommand())) return;
+  name: 'interactionCreate',
+  /**
+   * @param {Interaction} interaction
+   * @returns
+   */
+  async run(interaction) {
+    if (!(interaction.isCommand() || interaction.isApplicationCommand()))
+      return;
 
-        const command = interaction.client.commands.get(interaction.commandName);
-        interaction.client.totalInteractions++;
+    const command = interaction.client.commands.get(interaction.commandName);
+    interaction.client.totalInteractions++;
 
-        if (!command) {
-            if (interaction.replied) return;
-            interaction.reply({ content: 'Hubo un error interno 404 al intentar encontrar el comando\nPorfavor intenta mas tarde...', ephemeral: true });
-            return;
-        };
+    if (!command) {
+      if (interaction.replied) return;
+      interaction.reply({
+        content:
+          'Hubo un error interno 404 al intentar encontrar el comando\nPorfavor intenta mas tarde...',
+        ephemeral: true,
+      });
+      return;
+    }
 
-        /* Deprecated
+    /* Deprecated
         if (!beNocht) {
             const member0 = await interaction.guild.members.fetch(interaction.user.id);
             let notPass = 0;
@@ -65,58 +70,94 @@ module.exports = {
             }
         }*/
 
+    //--NCheckAuth--
+    //Parametros en command files:
+    // roles_req = String[]
+    // perms_req = String[]
+    // allRoles_req = Boolean
+    // allPerms_req = Boolean
+    // everthing_req = Boolean
+    const pass = () => {
+      if (interaction.user.id === interaction.client.owner) return 1;
 
-        //--NCheckAuth--
-        //Parametros en command files:
-        // roles_req = String[]
-        // perms_req = String[]
-        // allRoles_req = Boolean
-        // allPerms_req = Boolean
-        // everthing_req = Boolean
-        const pass = () => {
-            if (interaction.user.id === interaction.client.owner) return 1;
+      const all = command.everthing_req;
+      const member = interaction.member;
+      let notPass = 0,
+        checks = 0;
 
-            const all = command.everthing_req;
-            const member = interaction.member;
-            let notPass = 0, checks = 0;
-
-            if (command.roles_req) {
-                checks++;
-                if (!member.roles.cache.hasAny(...command.roles_req)) if (all) { return 0 } else { notPass++ };
-                if (!member.roles.cache.hasAll(...command.roles_req) && command.allRoles_req) if (all) { return 0 } else { notPass++ };
+      if (command.roles_req) {
+        checks++;
+        if (!member.roles.cache.hasAny(...command.roles_req))
+          if (all) {
+            return 0;
+          } else {
+            notPass++;
+          }
+        if (
+          !member.roles.cache.hasAll(...command.roles_req) &&
+          command.allRoles_req
+        )
+          if (all) {
+            return 0;
+          } else {
+            notPass++;
+          }
+      }
+      if (command.perms_req) {
+        checks++;
+        let permPass = false;
+        for (const perm of command.perms_req) {
+          if (member.permissions.has(perm)) {
+            permPass = true;
+            if (!command.allPerms_req) {
+              break;
             }
-            if (command.perms_req) {
-                checks++;
-                let permPass = false;
-                for (const perm of command.perms_req) {
-                    if (member.permissions.has(perm)) { permPass = true; if (!command.allPerms_req) { break } } else {
-                        permPass = false; if (command.allPerms_req) break;
-                    };
-                }
-                if (!permPass) { if (all) { return 0 } else { notPass++ } };
-            }
-
-            if (notPass == checks && checks) return 0;
-            return 1;
-        };
-        if (!pass()) {
-            notAuthorized(interaction);
-            return;
+          } else {
+            permPass = false;
+            if (command.allPerms_req) break;
+          }
         }
-        //--NCheckAuth--
-
-        try {
-            await command.run(interaction);
-            interaction.client.totalSuccessfullyInteractions++;
-        } catch (error) {
-            console.log('Hubo un error ejecutando el comando "' + interaction.commandName + '":', error);
-            try {
-                if (interaction.replied || interaction.deferred) {
-                    await interaction.editReply({ content: 'Hubo un error interno al ejecutar el comando.', ephemeral: true });
-                } else {
-                    await interaction.reply({ content: 'Hubo un error interno al ejecutar el comando.', ephemeral: true });
-                }
-            } catch (error) { }
+        if (!permPass) {
+          if (all) {
+            return 0;
+          } else {
+            notPass++;
+          }
         }
-    },
+      }
+
+      if (notPass == checks && checks) return 0;
+      return 1;
+    };
+    if (!pass()) {
+      notAuthorized(interaction);
+      return;
+    }
+    //--NCheckAuth--
+
+    try {
+      await command.run(interaction);
+      interaction.client.totalSuccessfullyInteractions++;
+    } catch (error) {
+      console.log(
+        'Hubo un error ejecutando el comando "' +
+          interaction.commandName +
+          '":',
+        error
+      );
+      try {
+        if (interaction.replied || interaction.deferred) {
+          await interaction.editReply({
+            content: 'Hubo un error interno al ejecutar el comando.',
+            ephemeral: true,
+          });
+        } else {
+          await interaction.reply({
+            content: 'Hubo un error interno al ejecutar el comando.',
+            ephemeral: true,
+          });
+        }
+      } catch (error) {}
+    }
+  },
 };

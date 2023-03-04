@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { CommandInteraction, MessageEmbed, Presence } = require('discord.js');
+const { CommandInteraction, MessageEmbed } = require('discord.js');
 const moment = require('moment');
 let statsCache = { 'timeout': moment().subtract(60, 's'), 'value': null };
 
