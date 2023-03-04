@@ -11,8 +11,9 @@
   "author": "TheNochtgamer",
   "license": "ISC",
   "dependencies": {
+    "@discordjs/builders": "^1.4.0",
     "discord-api-types": "^0.37.35",
-    "discord.js": "^13.8.1",
+    "discord.js": "^13.13.1",
     "dotenv": "^16.0.1",
     "moment": "^2.29.3",
     "moment-timezone": "^0.5.34",
