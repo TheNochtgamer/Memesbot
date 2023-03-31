@@ -26,7 +26,7 @@ module.exports = {
     const respuestas = [
       `<@!${userId}> cebo un :mate: para ${targetUser}`,
       `<@!${userId}> le dio un :mate: a ${targetUser}`,
-      `${targetUser}, <@!${userId}> te cebo un mate`,
+      // `${targetUser}, <@!${userId}> te cebo un mate`,
       `<@!${userId}> 🧉 ${targetUser}`,
     ];
 
