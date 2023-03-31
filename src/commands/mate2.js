@@ -19,19 +19,19 @@ module.exports = {
    */
   async run(interaction) {
     const userId = interaction.user.id;
-    const targetUserId = interaction.options.getUser('user');
-    const otherUserId = targetUserId.id;
+    const targetUser = interaction.options.getUser('user');
+    const otherUserId = targetUser.id;
     const aceptBut = require('./butAceptarMate.js').button();
     const aceptRow = new MessageActionRow().addComponents(aceptBut);
     const respuestas = [
-      `<@!${userId}> cebo un :mate: para <@!${targetUserId}>`,
-      `<@!${userId}> le dio un :mate: a <@!${targetUserId}>`,
-      `<@!${targetUserId}>, <@!${userId}> te cebo un mate`,
-      `<@!${userId}> 🧉 <@!${targetUserId}>`,
+      `<@!${userId}> cebo un :mate: para ${targetUser}`,
+      `<@!${userId}> le dio un :mate: a ${targetUser}`,
+      `${targetUser}, <@!${userId}> te cebo un mate`,
+      `<@!${userId}> 🧉 ${targetUser}`,
     ];
 
     if (userId !== interaction.client.owner) {
-      if (targetUserId.bot) {
+      if (targetUser.bot) {
         await interaction.reply({
           content: 'No podes darle un mate a un bot.',
           ephemeral: true,
@@ -48,7 +48,7 @@ module.exports = {
       }
     }
 
-    logme.log(`${interaction.user.tag} le dio un mate a ${targetUserId.tag}`);
+    logme.log(`${interaction.user.tag} le dio un mate a ${targetUser.tag}`);
     await interaction.reply({
       content: respuestas[Math.floor(Math.random() * respuestas.length)],
       components: [aceptRow],
