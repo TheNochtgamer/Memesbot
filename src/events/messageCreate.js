@@ -1,4 +1,5 @@
 const { Message } = require('discord.js');
+const { confi } = require('../utils');
 const {
   reactmeme,
   secret,
@@ -24,8 +25,8 @@ module.exports = {
     if (confi?.channelClipsId) delnotauthorizedclip(message);
     secret(message);
     if (
-      message.channel.type == 'DM' &&
-      message.author.id == message.client.owner
+      message.channel.type === 'DM' &&
+      message.author.id === message.client.owner
     )
       dmControl(message);
   },

@@ -1,7 +1,7 @@
-const { verifymsg, borrarPala } = require('./eventfunctions');
+const { verifymsg, borrarPala } = require("./eventfunctions");
 
 module.exports = {
-  name: 'messageReactionAdd',
+  name: "messageReactionAdd",
   async run(reaction, user) {
     if (user.bot) return;
 

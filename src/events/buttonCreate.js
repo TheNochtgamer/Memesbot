@@ -17,8 +17,8 @@ module.exports = {
       return;
     }
 
-    //--NCheckAuth--
-    //Parametros en button files:
+    // --NCheckAuth--
+    // Parametros en button files:
     // roles_req = String[]
     // perms_req = String[]
     // allRoles_req = Boolean
@@ -29,8 +29,8 @@ module.exports = {
 
       const all = button.everthing_req;
       const member = interaction.member;
-      let notPass = 0,
-        checks = 0;
+      let notPass = 0;
+      let checks = 0;
 
       if (button.roles_req) {
         checks++;
@@ -73,14 +73,14 @@ module.exports = {
         }
       }
 
-      if (notPass == checks && checks) return 0;
+      if (notPass === checks && checks) return 0;
       return 1;
     };
     if (!pass()) {
       notAuthorized(interaction);
       return;
     }
-    //--NCheckAuth--
+    // --NCheckAuth--
 
     try {
       await button.run(interaction);
@@ -90,7 +90,7 @@ module.exports = {
         'Hubo un error ejecutando el boton ' +
           interaction.customId +
           ': ' +
-          error
+          error,
       );
       try {
         if (interaction.replied || interaction.deferred) {

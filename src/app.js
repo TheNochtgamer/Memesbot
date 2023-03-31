@@ -2,7 +2,7 @@ require('dotenv').config();
 const fs = require('fs');
 const Discord = require('discord.js');
 const configMgr = require('./utils/configMgr.js');
-const { LogMgr, sleep, ReplyTimer } = require('./utils');
+const { sleep, ReplyTimer, confi, logme } = require('./utils');
 require('./utils/stringPlaceHolders');
 
 const client = new Discord.Client({
@@ -21,9 +21,6 @@ const client = new Discord.Client({
 });
 
 // globalThis.test = client;
-globalThis.confi = require('./config.json');
-globalThis.logme = new LogMgr();
-globalThis.PFlags = Discord.Permissions.FLAGS;
 client.totalInteractions = 0;
 client.totalSuccessfullyInteractions = 0;
 client.commands = new Discord.Collection();
@@ -33,10 +30,10 @@ client.timerAvailable = new ReplyTimer(10 * 1000).available;
 function archivos() {
   const commandFiles = fs
     .readdirSync('./src/commands')
-    .filter((file) => file.endsWith('.js'));
+    .filter(file => file.endsWith('.js'));
   const eventFiles = fs
     .readdirSync('./src/events')
-    .filter((file) => file.endsWith('.js'));
+    .filter(file => file.endsWith('.js'));
 
   for (const file of commandFiles) {
     const command = require(`./commands/${file}`);
@@ -45,7 +42,7 @@ function archivos() {
 
   for (const file of eventFiles) {
     const event = require(`./events/${file}`);
-    if (event.name == 'ready' || event.once) {
+    if (event.name === 'ready' || event.once) {
       client.once(event.name, (...args) => event.run(...args));
     } else {
       client.on(event.name, (...args) => event.run(...args));
@@ -58,21 +55,25 @@ function estadoUser() {
   client.user.setPresence({
     activities: [
       {
-        name: confi.activity0 || '',
-        type: confi.activity1 || '',
-        url: confi.activity2 || '',
+        name: confi.activity0 || null,
+        type: confi.activity1 || null,
+        url: confi.activity2 || null,
       },
     ],
   });
 }
 
-//-//SECUENCIA DE BOOTEO
+// SECUENCIA DE BOOTEO
 (async () => {
-  confi = await configMgr.main();
+  await configMgr.init();
   archivos();
   await client.login(process.env.TOKEN);
   await sleep(100);
+  setInterval(_ => {
+    estadoUser();
+  }, 1000 * 60 * 60);
   estadoUser();
-  await logme.set(client);
+  await logme.set(client, confi);
 })();
-//-//
+//
+

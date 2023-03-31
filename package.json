@@ -1,8 +1,8 @@
 {
   "name": "memesbot",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "",
-  "main": "app.js",
+  "main": "./src/app.js",
   "scripts": {
     "start": "node ./src/app.js",
     "load": "node ./src/utils/cargarCmds.js"
@@ -11,16 +11,25 @@
   "author": "TheNochtgamer",
   "license": "ISC",
   "dependencies": {
-    "@discordjs/builders": "^1.4.0",
-    "@discordjs/rest": "^1.5.0",
-    "discord-api-types": "^0.37.35",
-    "discord.js": "^13.13.1",
-    "dotenv": "^16.0.1",
-    "moment": "^2.29.3",
-    "moment-timezone": "^0.5.34",
+    "@discordjs/builders": "^1.5.0",
+    "@discordjs/rest": "^1.6.0",
+    "discord-api-types": "^0.37.37",
+    "discord.js": "^13.14.0",
+    "dotenv": "^16.0.3",
+    "moment": "^2.29.4",
+    "moment-timezone": "^0.5.42",
     "mysql": "^2.18.1",
     "mysql2": "^3.2.0",
     "randomcolor": "^0.6.2",
-    "sequelize": "^6.21.6"
+    "sequelize": "^6.30.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.37.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^15.7.0",
+    "eslint-plugin-promise": "^6.1.1"
   }
 }
+

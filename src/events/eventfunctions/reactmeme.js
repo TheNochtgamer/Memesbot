@@ -1,8 +1,7 @@
 const crypto = require('crypto');
 const https = require('https');
 const { Message } = require('discord.js');
-
-const { eNames } = require('../../utils');
+const { eNames, confi } = require('../../utils');
 
 /**
  * @param {Message} message
@@ -22,12 +21,12 @@ module.exports = async function reactmeme(message) {
   )
     return;
 
-  let isRecycled = (async (sended = false) => {
+  const isRecycled = (async (sended = false) => {
     if (!message.attachments.at(0) || !confi.memeRepetidoReact) return false;
     for (let index = 0; index < message.attachments.size && !sended; index++) {
       await new Promise(resolve => {
         https.get(message.attachments.at(index).proxyURL, res => {
-          let hash = crypto.createHash('sha256');
+          const hash = crypto.createHash('sha256');
           let hashDiges = '';
           hash.setEncoding('hex');
           res.pipe(hash);
@@ -38,8 +37,8 @@ module.exports = async function reactmeme(message) {
             if (!hashDiges) return resolve();
             let res2;
             try {
-              const sequelize = require('../../database');
-              const Hashes = require('../../database/models/hashes')(sequelize);
+              const { Hashes } = require('../../database');
+              // const Hashes = require('../../database/models/hashes')(sequelize);
               res2 = await Hashes.findOne({
                 where: {
                   hash: hashDiges,
@@ -48,7 +47,7 @@ module.exports = async function reactmeme(message) {
             } catch (error) {
               console.log(
                 'Hubo un error al intentar leer la base de datos:',
-                error
+                error,
               );
               return resolve();
             }
@@ -102,3 +101,4 @@ module.exports = async function reactmeme(message) {
     }
   } catch (error) {}
 };
+

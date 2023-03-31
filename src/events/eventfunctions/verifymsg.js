@@ -6,8 +6,14 @@ const {
   WebhookClient,
 } = require('discord.js');
 const moment = require('moment');
-
-const { sendWebHook, sleep, eNames, fixMoment } = require('../../utils');
+const {
+  sendWebHook,
+  sleep,
+  eNames,
+  fixMoment,
+  confi,
+  logme,
+} = require('../../utils');
 const sendHash = require('./_sendHash');
 const sendBackWebhook = require('./_sendBackWebhook');
 const timeoutBut = require('../../commands/butTimeout.js').button();
@@ -29,19 +35,19 @@ module.exports = async function verifymsg(reaction, user) {
 
   if (channel.id !== confi.channelStartId || !endChannel) return;
 
-  const [{ value: member }, { status: msgStatus }] = await Promise.allSettled([
+  const [{ value: member }, promiseStatus] = await Promise.allSettled([
     message.guild.members.fetch(user.id),
     message.fetch(),
   ]);
 
-  if (msgStatus == 'rejected') {
-    console.log('Hubo un error fetching un mensaje:', error);
+  if (promiseStatus.status === 'rejected') {
+    console.log('Hubo un error fetching un mensaje:', promiseStatus.reason);
     return;
   }
 
   const botonTimeout = new MessageActionRow().addComponents(timeoutBut);
   const created = fixMoment(moment(message.createdTimestamp)).format(
-    'YY-MM-DD HH-mm-ss'
+    'YY-MM-DD HH-mm-ss',
   );
   const reactEName = reaction.emoji.name;
   const author = message.author;
@@ -51,10 +57,10 @@ module.exports = async function verifymsg(reaction, user) {
     .permissionsFor(member.id)
     .has('MANAGE_MESSAGES');
   const memberModRole = member.roles.cache.some(
-    role => role.id == confi.monderatorId
+    role => role.id === confi.monderatorId,
   );
   const memberVisitRole = member.roles.cache.some(
-    role => role.id == confi.visitorId
+    role => role.id === confi.visitorId,
   );
 
   if (
@@ -62,7 +68,7 @@ module.exports = async function verifymsg(reaction, user) {
       canManageMessages ||
       memberModRole ||
       memberVisitRole ||
-      author.id == reaction.client.user.id
+      author.id === reaction.client.user.id
     )
   ) {
     if (!(confi.replyMsg && reaction.client.timerAvailable())) return;
@@ -72,10 +78,10 @@ module.exports = async function verifymsg(reaction, user) {
       `${user.tag} no tiene permisos para añadir reacciones en el canal ${channel.name}`,
       `<@${user.id}> no tiene permisos para añadir reacciones en el canal <#${channel.id}>`,
       user.id,
-      '#FF0000'
+      '#FF0000',
     );
 
-    let replyMsg = await channel.send({
+    const replyMsg = await channel.send({
       content: `<@${user.id}>`,
       embeds: [errEmbed],
       components: [botonTimeout],
@@ -94,37 +100,36 @@ module.exports = async function verifymsg(reaction, user) {
     return;
 
   if (
-    reactEName == '❌' ||
-    reactEName == '👎' ||
-    reactEName == '♻️' ||
+    reactEName === '❌' ||
+    reactEName === '👎' ||
+    reactEName === '♻️' ||
     eNames.disapproved.includes(reactEName)
   ) {
     sendHash(message);
 
-    const sequelize = require('../../database');
-    const Memes = require('../../database/models/memes')(sequelize);
+    const { Memes } = require('../../database');
 
-    let values = await Promise.allSettled([
+    const values = await Promise.allSettled([
       Memes.create({
         type: 1,
         user_id: author.id,
         mod_id: member.id,
-        created: created,
+        created,
       }),
       message.delete(),
     ]);
 
-    if (values[0].status == 'rejected')
+    if (values[0].status === 'rejected')
       console.log('Hubo un error en la base de datos:', values[0].reason);
-    if (values[1].status == 'rejected')
+    if (values[1].status === 'rejected')
       console.log('Hubo un error borrando un msg (0x2):', values[1].reason);
     return;
   }
 
   if (
     !(
-      reactEName == '✅' ||
-      reactEName == '👍' ||
+      reactEName === '✅' ||
+      reactEName === '👍' ||
       eNames.approved.includes(reactEName)
     )
   )
@@ -132,12 +137,12 @@ module.exports = async function verifymsg(reaction, user) {
 
   if (!confi.channelOpen) {
     errEmbed.setDescription('El canal de memes esta cerrado ❌');
-    let promises = [reaction.users.remove(member.id)];
+    const promises = [reaction.users.remove(member.id)];
     if (confi.replyMsg && client.timerAvailable())
       promises.push(
-        channel.send({ content: `<@${user.id}>`, embeds: [errEmbed] })
+        channel.send({ content: `<@${user.id}>`, embeds: [errEmbed] }),
       );
-    let values = await Promise.allSettled(promises);
+    const values = await Promise.allSettled(promises);
 
     if (values.at(1)?.value) {
       setTimeout(async _ => {
@@ -159,22 +164,22 @@ module.exports = async function verifymsg(reaction, user) {
     }
   }
 
-  let endMessage = await sendWebHook(endChannel, {
+  const endMessage = await sendWebHook(endChannel, {
     username: author.username,
     avatarURL: author.avatarURL(),
-    content: content,
-    files: files,
+    content,
+    files,
   });
 
   try {
-    const sequelize = require('../../database');
-    const Memes = require('../../database/models/memes')(sequelize);
+    const { Memes } = require('../../database');
+    // const Memes = require('../../database/models/memes')(sequelize);
 
     await Memes.create({
       msg_id: endMessage.id,
       user_id: author.id,
       mod_id: member.id,
-      created: created,
+      created,
     });
   } catch (error) {
     console.log('Hubo un error al guardar un meme verificado:', error);
@@ -183,3 +188,4 @@ module.exports = async function verifymsg(reaction, user) {
   sendHash(message, endMessage);
   sendBackWebhook(message, endMessage, member);
 };
+

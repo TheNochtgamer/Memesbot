@@ -68,10 +68,10 @@ module.exports = {
                     return;
                 }
             }
-        }*/
+        } */
 
-    //--NCheckAuth--
-    //Parametros en command files:
+    // --NCheckAuth--
+    // Parametros en command files:
     // roles_req = String[]
     // perms_req = String[]
     // allRoles_req = Boolean
@@ -82,8 +82,8 @@ module.exports = {
 
       const all = command.everthing_req;
       const member = interaction.member;
-      let notPass = 0,
-        checks = 0;
+      let notPass = 0;
+      let checks = 0;
 
       if (command.roles_req) {
         checks++;
@@ -126,14 +126,14 @@ module.exports = {
         }
       }
 
-      if (notPass == checks && checks) return 0;
+      if (notPass === checks && checks) return 0;
       return 1;
     };
     if (!pass()) {
       notAuthorized(interaction);
       return;
     }
-    //--NCheckAuth--
+    // --NCheckAuth--
 
     try {
       await command.run(interaction);
@@ -143,7 +143,7 @@ module.exports = {
         'Hubo un error ejecutando el comando "' +
           interaction.commandName +
           '":',
-        error
+        error,
       );
       try {
         if (interaction.replied || interaction.deferred) {
