@@ -7,6 +7,7 @@ function placeHolders() {
   return this.replace(RegExp('(' + newLine.join('|') + ')', 'gi'), '\n');
 }
 
-Object.defineProperty(String, 'placeHolders', {
+Object.defineProperty(String.prototype, 'placeHolders', {
   value: placeHolders,
 });
+
