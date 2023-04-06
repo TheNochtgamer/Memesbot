@@ -7,6 +7,7 @@ const {
   delnotauthorizedclip,
   dmControl,
   autoPublishAnnounce,
+  respuestas,
 } = require('./eventfunctions');
 
 module.exports = {
@@ -29,5 +30,7 @@ module.exports = {
       message.author.id === message.client.owner
     )
       dmControl(message);
+    respuestas(message);
   },
 };
+
