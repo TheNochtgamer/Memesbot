@@ -15,5 +15,7 @@
   "channelClipsId": "",
   "numericReact": true,
   "memeRepetidoReact": true,
-  "autoPublishAnnounces": false
+  "autoPublishAnnounces": false,
+  "logDeletedMessagesChannelId": ""
 }
+

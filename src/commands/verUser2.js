@@ -1,6 +1,10 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed, CommandInteraction } = require('discord.js');
-const { getSql, fixMoment, eNames, PFlags } = require('../utils');
+const {
+  EmbedBuilder,
+  CommandInteraction,
+  SlashCommandBuilder,
+  PermissionsBitField,
+} = require('discord.js');
+const { getSql, fixMoment, eNames } = require('../utils');
 const moment = require('moment');
 const randomColor = require('randomcolor');
 
@@ -8,7 +12,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('checkuser')
     .setDescription('Comando para ver la estadisticas de alguien')
-    .setDefaultMemberPermissions(PFlags.MANAGE_MESSAGES)
+    .setDefaultMemberPermissions(PermissionsBitField.Flags.ManageMessages)
     .addUserOption(option =>
       option
         .setName('user')
@@ -24,7 +28,7 @@ module.exports = {
   async run(interaction) {
     const user = interaction.options.getUser('user', true);
     const ahora = fixMoment(moment());
-    const embed = new MessageEmbed()
+    const embed = new EmbedBuilder()
       .setDescription('Buscando en la base de datos...')
       .setColor(randomColor())
       .setFooter({ text: interaction.client.user.username })
@@ -34,7 +38,7 @@ module.exports = {
       embed
         .setAuthor({ name: 'Error' })
         .setDescription('Hubo un error inesperado, no se declaro el "user"')
-        .setColor('RED');
+        .setColor('Red');
       await interaction.reply({ embeds: [embed], ephemeral: true });
       return;
     }
@@ -45,7 +49,7 @@ module.exports = {
         .setDescription(
           'Acaso crees que tengo algun dato propio?\n -Porfavor elija otro usuario.',
         )
-        .setColor('RED');
+        .setColor('Red');
       await interaction.reply({ embeds: [embed], ephemeral: true });
       return;
     }
@@ -56,7 +60,7 @@ module.exports = {
         .setDescription(
           'Estas buscando datos de un bot y por si no sabias, los bots no mandan memes 🙄\n -Porfavor elija otro usuario.',
         )
-        .setColor('RED');
+        .setColor('Red');
       await interaction.reply({ embeds: [embed], ephemeral: true });
       return;
     }
@@ -107,7 +111,7 @@ module.exports = {
       embed
         .setAuthor({ name: 'Error' })
         .setDescription('Hubo un error con la base de datos')
-        .setColor('RED');
+        .setColor('Red');
       console.log('Hubo un error con la base de datos 0x1:', error);
       interaction.editReply({ embeds: [embed], ephemeral: true });
       return;

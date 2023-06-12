@@ -1,12 +1,15 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { CommandInteraction } = require('discord.js');
-const { PFlags, logme } = require('../utils');
+const {
+  CommandInteraction,
+  SlashCommandBuilder,
+  PermissionsBitField,
+} = require('discord.js');
+const { logme } = require('../utils');
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('say')
     .setDescription('Enviar mensajes')
-    .setDefaultMemberPermissions(PFlags.MANAGE_MESSAGES)
+    .setDefaultMemberPermissions(PermissionsBitField.Flags.ManageMessages)
     .addStringOption(option =>
       option
         .setName('mensaje')

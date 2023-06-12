@@ -1,17 +1,18 @@
 const {
-  MessageButton,
+  ButtonBuilder,
   ButtonInteraction,
   MessageMentions: { USERS_PATTERN },
+  ButtonStyle,
 } = require('discord.js');
 const { logme } = require('../utils');
 
 module.exports = {
   data: { name: 'timeout' },
   button: () => {
-    return new MessageButton()
+    return new ButtonBuilder()
       .setCustomId('timeout')
       .setLabel('⏲️')
-      .setStyle('DANGER');
+      .setStyle(ButtonStyle.Danger);
   },
   perms_req: ['MODERATE_MEMBERS'],
   /**

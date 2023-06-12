@@ -1,6 +1,4 @@
-const fs = require("fs");
-const path = require("path");
-const { Sequelize } = require("sequelize");
+const { Sequelize } = require('sequelize');
 
 const sequelize = new Sequelize(
   process.env.BASENAME,
@@ -9,16 +7,16 @@ const sequelize = new Sequelize(
   {
     pool: { idle: 30 * 1000 },
     host: process.env.BASEIP,
-    dialect: "mysql",
+    dialect: 'mysql',
     logging: false,
     define: { timestamps: false, freezeTableName: true },
-  }
+  },
 );
-const models = {
+module.exports = {
   sequelize,
-  Config: require("./models/config")(sequelize),
-  Hashes: require("./models/hashes")(sequelize),
-  Memes: require("./models/memes")(sequelize),
+  Config: require('./models/config')(sequelize),
+  Hashes: require('./models/hashes')(sequelize),
+  Memes: require('./models/memes')(sequelize),
 };
 
 // fs.readdirSync(path.join(__dirname, '/models'))
@@ -28,4 +26,3 @@ const models = {
 //     models[model.name.at(0).toUpperCase() + model.name.slice(1)] = model;
 //   });
 
-module.exports = models;

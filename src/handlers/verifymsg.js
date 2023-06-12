@@ -1,8 +1,8 @@
 const {
   MessageReaction,
   User,
-  MessageActionRow,
-  MessageEmbed,
+  ActionRowBuilder,
+  EmbedBuilder,
   WebhookClient,
 } = require('discord.js');
 const moment = require('moment');
@@ -13,10 +13,10 @@ const {
   fixMoment,
   confi,
   logme,
-} = require('../../utils');
+} = require('../utils');
 const sendHash = require('./_sendHash');
 const sendBackWebhook = require('./_sendBackWebhook');
-const timeoutBut = require('../../commands/butTimeout.js').button();
+const timeoutBut = require('../commands/butTimeout.js').button();
 
 /**
  * @param {MessageReaction} reaction
@@ -28,8 +28,8 @@ module.exports = async function verifymsg(reaction, user) {
   const message = reaction.message;
   const channel = message.channel;
   const endChannel = message.guild?.channels?.cache?.get(confi.channelEndId);
-  const errEmbed = new MessageEmbed()
-    .setColor('RED')
+  const errEmbed = new EmbedBuilder()
+    .setColor('Red')
     .setAuthor({ name: 'Error' })
     .setDescription('null');
 
@@ -45,7 +45,7 @@ module.exports = async function verifymsg(reaction, user) {
     return;
   }
 
-  const botonTimeout = new MessageActionRow().addComponents(timeoutBut);
+  const botonTimeout = new ActionRowBuilder().addComponents(timeoutBut);
   const created = fixMoment(moment(message.createdTimestamp)).format(
     'YY-MM-DD HH-mm-ss',
   );
@@ -107,7 +107,7 @@ module.exports = async function verifymsg(reaction, user) {
   ) {
     sendHash(message);
 
-    const { Memes } = require('../../database');
+    const { Memes } = require('../database');
 
     const values = await Promise.allSettled([
       Memes.create({
@@ -172,7 +172,7 @@ module.exports = async function verifymsg(reaction, user) {
   });
 
   try {
-    const { Memes } = require('../../database');
+    const { Memes } = require('../database');
     // const Memes = require('../../database/models/memes')(sequelize);
 
     await Memes.create({

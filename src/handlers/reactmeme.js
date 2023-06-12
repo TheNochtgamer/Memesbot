@@ -1,7 +1,7 @@
 const crypto = require('crypto');
 const https = require('https');
 const { Message } = require('discord.js');
-const { eNames, confi } = require('../../utils');
+const { eNames, confi } = require('../utils');
 
 /**
  * @param {Message} message
@@ -37,7 +37,7 @@ module.exports = async function reactmeme(message) {
             if (!hashDiges) return resolve();
             let res2;
             try {
-              const { Hashes } = require('../../database');
+              const { Hashes } = require('../database');
               // const Hashes = require('../../database/models/hashes')(sequelize);
               res2 = await Hashes.findOne({
                 where: {

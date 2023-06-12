@@ -1,14 +1,17 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { CommandInteraction, MessageEmbed } = require('discord.js');
+const {
+  CommandInteraction,
+  EmbedBuilder,
+  SlashCommandBuilder,
+  PermissionsBitField,
+} = require('discord.js');
 const moment = require('moment');
-const { PFlags } = require('../utils');
 let statsCache = { timeout: moment().subtract(60, 's'), value: null };
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('stats')
     .setDescription('Ver las estadisticas de memes')
-    .setDefaultMemberPermissions(PFlags.MANAGE_MESSAGES)
+    .setDefaultMemberPermissions(PermissionsBitField.Flags.ManageMessages)
     .addStringOption(option =>
       option
         .setName('periodo')
@@ -37,12 +40,12 @@ module.exports = {
       '24h',
     ];
     const inTime = Math.round(24 * periodo[0]);
-    const embed = new MessageEmbed()
+    const embed = new EmbedBuilder()
       .setAuthor({
         name: `${interaction.guild.name} Stats`,
         iconURL: interaction.guild.iconURL(),
       })
-      .setColor('RANDOM')
+      .setColor('Random')
       .setFooter({ text: interaction.client.user.username })
       .setDescription('Buscando en la base de datos...')
       .setTimestamp();

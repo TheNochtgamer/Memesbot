@@ -1,7 +1,7 @@
-const { verifymsg, borrarPala } = require("./eventfunctions");
+const { verifymsg, borrarPala } = require('../handlers');
 
 module.exports = {
-  name: "messageReactionAdd",
+  name: 'messageReactionAdd',
   async run(reaction, user) {
     if (user.bot) return;
 
@@ -9,3 +9,4 @@ module.exports = {
     borrarPala(reaction, user);
   },
 };
+

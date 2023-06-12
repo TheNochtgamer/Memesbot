@@ -1,5 +1,8 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { CommandInteraction, MessageEmbed } = require('discord.js');
+const {
+  CommandInteraction,
+  SlashCommandBuilder,
+  EmbedBuilder,
+} = require('discord.js');
 const { confi } = require('../utils');
 
 module.exports = {
@@ -12,7 +15,7 @@ module.exports = {
    * @param {CommandInteraction} interaction
    */
   async run(interaction) {
-    const embed = new MessageEmbed()
+    const embed = new EmbedBuilder()
       .setAuthor({ name: interaction.guild.name })
       .setDescription(
         'El canal de memes esta ' +

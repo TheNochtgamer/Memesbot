@@ -1,29 +1,34 @@
 require('dotenv').config();
 const fs = require('fs');
-const Discord = require('discord.js');
+const {
+  Client,
+  GatewayIntentBits,
+  Partials,
+  Collection,
+} = require('discord.js');
 const configMgr = require('./utils/configMgr.js');
 const { sleep, ReplyTimer, confi, logme } = require('./utils');
 require('./utils/stringPlaceHolders');
 
-const client = new Discord.Client({
+const client = new Client({
   intents: [
-    'GUILDS',
-    'GUILD_MESSAGES',
-    'GUILD_MESSAGE_REACTIONS',
-    'GUILD_MEMBERS',
-    'GUILD_WEBHOOKS',
-    'GUILD_PRESENCES',
-    'DIRECT_MESSAGES',
-    'DIRECT_MESSAGE_REACTIONS',
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.GuildMessageReactions,
+    GatewayIntentBits.GuildMembers,
+    GatewayIntentBits.GuildWebhooks,
+    GatewayIntentBits.GuildPresences,
+    GatewayIntentBits.DirectMessages,
+    GatewayIntentBits.DirectMessageReactions,
   ],
-  partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
+  partials: [Partials.Message, Partials.Channel, Partials.Reaction],
   allowedMentions: { parse: ['users', 'roles', 'everyone'], repliedUser: true },
 });
 
 // globalThis.test = client;
 client.totalInteractions = 0;
 client.totalSuccessfullyInteractions = 0;
-client.commands = new Discord.Collection();
+client.commands = new Collection();
 client.owner = process.env.BOTOWNER;
 client.timerAvailable = new ReplyTimer(10 * 1000).available;
 

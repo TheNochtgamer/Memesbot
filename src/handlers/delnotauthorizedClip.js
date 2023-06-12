@@ -1,20 +1,23 @@
-const { Message, MessageActionRow, MessageEmbed } = require('discord.js');
-const { confi, logme } = require('../../utils');
-const timeoutBut = require('../../commands/butTimeout.js').button();
+const { Message, ActionRowBuilder, EmbedBuilder } = require('discord.js');
+const { confi, logme } = require('../utils');
+const timeoutBut = require('../commands/butTimeout.js').button();
 
 /**
  * @param {Message} message
  * @returns
  */
-module.exports = async function delnotauthorized(message) {
+module.exports = async function delnotauthorizedclip(message) {
   const channel = message.channel;
-  if (confi.channelStartId !== channel.id) {
+  if (confi.channelClipsId !== channel.id) {
     return;
   }
 
-  if (message.attachments.size !== 0 || message.content.includes('https://'))
+  if (
+    message.content.includes('https://www.twitch') ||
+    message.content.includes('https://clips.twitch')
+  )
     return;
-
+  // https://clips.twitch.tv/EnticingFamousLegFailFish
   const author = message.author;
   const guild = message.guild;
   const member = await guild.members.fetch(author.id);
@@ -23,7 +26,7 @@ module.exports = async function delnotauthorized(message) {
   const memberModRole = member.roles.cache.some(
     role => role.id === confi.monderatorId,
   );
-  const compRow = new MessageActionRow().addComponents(timeoutBut);
+  const compRow = new ActionRowBuilder().addComponents(timeoutBut);
 
   if (canManageMessages || memberModRole) return;
 
@@ -43,11 +46,9 @@ module.exports = async function delnotauthorized(message) {
     '#FF0000',
   );
 
-  const embed = new MessageEmbed()
-    .setColor('RED')
-    .setDescription(
-      '**No** tenes permisos para enviar comentarios en este canal ❌',
-    )
+  const embed = new EmbedBuilder()
+    .setColor('Red')
+    .setDescription('Este canal es solo para mandar clips de twitch ❌')
     .setAuthor({ name: 'Error' })
     .setFooter({ text: message.client.user.username })
     .setTimestamp();

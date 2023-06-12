@@ -1,5 +1,8 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed, CommandInteraction } = require('discord.js');
+const {
+  EmbedBuilder,
+  SlashCommandBuilder,
+  CommandInteraction,
+} = require('discord.js');
 const randomColor = require('randomcolor');
 
 module.exports = {
@@ -24,7 +27,7 @@ module.exports = {
       }
     });
 
-    const embed = new MessageEmbed()
+    const embed = new EmbedBuilder()
       .setTitle('Bots disponibles:')
       .setDescription(reply)
       .setColor(randomColor());

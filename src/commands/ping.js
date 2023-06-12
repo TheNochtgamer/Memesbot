@@ -1,12 +1,11 @@
-const { SlashCommandBuilder } = require("@discordjs/builders");
-const { CommandInteraction } = require("discord.js");
+const { CommandInteraction, SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
   raw: true,
   data: new SlashCommandBuilder()
-    .setName("ping")
-    .setDescription("Te dice pong.."),
-  // .setDefaultMemberPermissions(PFlags.VIEW_CHANNEL),
+    .setName('ping')
+    .setDescription('Te dice pong..'),
+  // .setDefaultMemberPermissions(PermissionsBitField.Flags.View_channels),
   // roles_req: ['958202026037239881', '965388862576816168'],
   // perms_req: ['ADMINISTRATOR'],
   // allRoles_req: false,
@@ -17,7 +16,7 @@ module.exports = {
    */
   async run(interaction) {
     const client = interaction.client;
-    console.log("ping by", interaction.user.tag);
+    console.log('ping by', interaction.user.tag);
 
     if (interaction.user?.id !== interaction.client.owner) {
       await interaction.reply({
@@ -25,7 +24,7 @@ module.exports = {
         ephemeral: true,
       });
     } else {
-      const packageInfo = require("../../package.json");
+      const packageInfo = require('../../package.json');
       await interaction.reply({
         content: `<@!${interaction.user.id}> - ${client.ws.ping}ms Pong!\n-Dev:\nVer: ${packageInfo.version}\nTotalInteractions: ${client.totalInteractions}\nTotalSuccessfullyInteractions: ${client.totalSuccessfullyInteractions}`,
         ephemeral: true,
@@ -33,3 +32,4 @@ module.exports = {
     }
   },
 };
+

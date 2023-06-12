@@ -1,6 +1,6 @@
-const { Message, MessageEmbed } = require('discord.js');
-const { confi } = require('../../utils');
-const configMgr = require('../../utils/configMgr');
+const { Message, EmbedBuilder } = require('discord.js');
+const { confi } = require('../utils');
+const configMgr = require('../utils/configMgr');
 const helpMsg = `Usaste help, comandos disponibles:
 -
  get [opcion] | Para retornar el valor de una variable o una constante en el programa

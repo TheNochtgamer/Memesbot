@@ -1,5 +1,8 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { CommandInteraction, MessageActionRow } = require('discord.js');
+const {
+  CommandInteraction,
+  SlashCommandBuilder,
+  ActionRowBuilder,
+} = require('discord.js');
 const { logme } = require('../utils/index.js');
 const mins = 10 * 60 * 1000;
 
@@ -22,7 +25,7 @@ module.exports = {
     const targetUser = interaction.options.getUser('user');
     const otherUserId = targetUser.id;
     const aceptBut = require('./butAceptarMate.js').button();
-    const aceptRow = new MessageActionRow().addComponents(aceptBut);
+    const aceptRow = new ActionRowBuilder().addComponents(aceptBut);
     const respuestas = [
       `<@!${userId}> cebo un :mate: para ${targetUser}`,
       `<@!${userId}> le dio un :mate: a ${targetUser}`,

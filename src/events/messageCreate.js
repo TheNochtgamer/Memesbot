@@ -8,7 +8,7 @@ const {
   dmControl,
   autoPublishAnnounce,
   respuestas,
-} = require('./eventfunctions');
+} = require('../handlers');
 
 module.exports = {
   name: 'messageCreate',

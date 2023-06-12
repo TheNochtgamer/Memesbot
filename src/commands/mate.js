@@ -1,5 +1,8 @@
-const { ContextMenuCommandBuilder } = require('@discordjs/builders');
-const { ContextMenuInteraction, MessageActionRow } = require('discord.js');
+const {
+  ContextMenuInteraction,
+  ContextMenuCommandBuilder,
+  ActionRowBuilder,
+} = require('discord.js');
 const { logme } = require('../utils/index.js');
 const mins = 10 * 60 * 1000;
 
@@ -14,7 +17,7 @@ module.exports = {
     const targetUserId = interaction.targetId;
     const otherUser = interaction.guild.members.cache.get(targetUserId);
     const aceptBut = require('./butAceptarMate.js').button();
-    const aceptRow = new MessageActionRow().addComponents(aceptBut);
+    const aceptRow = new ActionRowBuilder().addComponents(aceptBut);
     const respuestas = [
       `<@!${userId}> cebo un :mate: para <@!${targetUserId}>`,
       `<@!${userId}> le dio un :mate: a <@!${targetUserId}>`,

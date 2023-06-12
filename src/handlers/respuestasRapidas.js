@@ -1,5 +1,5 @@
 const { Message, Collection } = require('discord.js');
-const { confi } = require('../../utils');
+const { confi } = require('../utils');
 
 const msgsRespuesta = {
   hola: async ({ message }) => {

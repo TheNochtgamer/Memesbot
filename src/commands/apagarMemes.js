@@ -1,22 +1,25 @@
-const { SlashCommandBuilder } = require("@discordjs/builders");
-const { CommandInteraction } = require("discord.js");
-const moment = require("moment");
-const { confi, PFlags, logme } = require("../utils/index.js");
-const { save } = require("../utils/configMgr.js");
+const {
+  CommandInteraction,
+  SlashCommandBuilder,
+  PermissionsBitField,
+} = require('discord.js');
+const moment = require('moment');
+const { confi, logme } = require('../utils/index.js');
+const { save } = require('../utils/configMgr.js');
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("bloquear")
+    .setName('bloquear')
     .setDescription(
-      "Bloquea el canal de memes sin que nadie pueda verificar mas memes"
+      'Bloquea el canal de memes sin que nadie pueda verificar mas memes',
     )
-    .setDefaultMemberPermissions(PFlags.MANAGE_MESSAGES)
-    .addSubcommand((subcommand) =>
+    .setDefaultMemberPermissions(PermissionsBitField.Flags.ManageMessages)
+    .addSubcommand(subcommand =>
       subcommand
-        .setName("memes")
+        .setName('memes')
         .setDescription(
-          "Bloquea el canal de memes sin que nadie pueda verificar mas memes"
-        )
+          'Bloquea el canal de memes sin que nadie pueda verificar mas memes',
+        ),
     ),
   // roles_req: [confi.monderatorId],
   // perms_req: ['MANAGE_MESSAGES'],
@@ -43,27 +46,27 @@ module.exports = {
         ephemeral: true,
       });
       // ----------------------- Stream 05/05 -----------------------
-      const separador = "-----------------------";
-      const stampSeparador = "_ _                                    ";
+      const separador = '-----------------------';
+      const stampSeparador = '_ _                                    ';
       const date = moment();
-      const stream = ` Stream ${date.format("DD/MM")} `;
+      const stream = ` Stream ${date.format('DD/MM')} `;
       const tStamp = `<t:${date.unix()}:R>`;
       const line =
         separador +
         stream +
         separador +
-        "\n" +
+        '\n' +
         stampSeparador +
-        "[" +
+        '[' +
         tStamp +
-        "]";
+        ']';
 
       try {
         await endChannel.send({ content: line });
       } catch (error) {
         console.log(
-          "Hubo un error al intentar enviar un mensaje al canal de memes:",
-          error
+          'Hubo un error al intentar enviar un mensaje al canal de memes:',
+          error,
         );
       }
     } else {
@@ -77,17 +80,17 @@ module.exports = {
     if (sRes.success) {
       logme.log(
         `${interaction.user.tag} actualizo el canal de memes a ${
-          confi.channelOpen ? "Abierto" : "Cerrado"
+          confi.channelOpen ? 'Abierto' : 'Cerrado'
         }`,
         `<@${interaction.user.id}> actualizo el canal de memes a ${
-          confi.channelOpen ? "Abierto" : "Cerrado"
+          confi.channelOpen ? 'Abierto' : 'Cerrado'
         }`,
-        interaction.user.id
+        interaction.user.id,
       );
     } else {
       console.log(
-        "Hubo un error al intentar guardar la configuracion (channelOpen):",
-        sRes.err
+        'Hubo un error al intentar guardar la configuracion (channelOpen):',
+        sRes.err,
       );
     }
 
@@ -97,12 +100,13 @@ module.exports = {
       }),
       endChannel.edit(
         {
-          topic: `${confi.channelOpen ? "Abierto" : "Cerrado"} | <@${
+          topic: `${confi.channelOpen ? 'Abierto' : 'Cerrado'} | <@${
             process.env.CLIENTID
           }>`,
         },
-        "Actualizacion del canal de memes"
+        'Actualizacion del canal de memes',
       ),
     ]);
   },
 };
+

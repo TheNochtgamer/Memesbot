@@ -1,5 +1,8 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { CommandInteraction, MessageEmbed } = require('discord.js');
+const {
+  CommandInteraction,
+  SlashCommandBuilder,
+  EmbedBuilder,
+} = require('discord.js');
 
 module.exports = {
   raw: true,
@@ -24,8 +27,8 @@ module.exports = {
     const user = interaction.options.getUser('mencion');
     const spoiler = interaction.options.getString('spoiler') || '0';
     const palasIds = ['982489887091621950', '988161502060085268'];
-    const embed = new MessageEmbed()
-      .setColor('RED')
+    const embed = new EmbedBuilder()
+      .setColor('Red')
       .setDescription('Acaso estas intentando dedicarle una pala a un bot ???.')
       .setAuthor({ name: 'Error' });
     if (user?.bot) {

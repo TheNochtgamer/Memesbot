@@ -1,18 +1,19 @@
 const {
-  MessageButton,
+  ButtonBuilder,
   ButtonInteraction,
   MessageMentions: { USERS_PATTERN },
-  MessageEmbed,
-  MessageActionRow,
+  EmbedBuilder,
+  ButtonStyle,
+  ActionRowBuilder,
 } = require('discord.js');
 
 module.exports = {
   data: { name: 'aceptmate' },
   button: () => {
-    return new MessageButton()
+    return new ButtonBuilder()
       .setCustomId('aceptmate')
       .setLabel('Aceptar')
-      .setStyle('SUCCESS');
+      .setStyle(ButtonStyle.Primary);
   },
   /**
    * @param {ButtonInteraction} interaction
@@ -24,8 +25,8 @@ module.exports = {
     const ruidomateE = interaction.client.emojis.cache.find(
       emoji => emoji.name === 'ruidomate',
     );
-    const embed = new MessageEmbed()
-      .setColor('RED')
+    const embed = new EmbedBuilder()
+      .setColor('Red')
       .setDescription('Este mate no te lo cebaron a vos.')
       .setAuthor({ name: 'Error' });
 
@@ -43,7 +44,7 @@ module.exports = {
     }
 
     const disabButton = this.button().setDisabled(true);
-    const buttonRow = new MessageActionRow().addComponents(disabButton);
+    const buttonRow = new ActionRowBuilder().addComponents(disabButton);
 
     try {
       await interaction.update({ content: msg, components: [buttonRow] });

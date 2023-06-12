@@ -1,13 +1,16 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { CommandInteraction } = require('discord.js');
+const {
+  CommandInteraction,
+  SlashCommandBuilder,
+  PermissionsBitField,
+} = require('discord.js');
 const moment = require('moment');
-const { fixMoment, confi, PFlags } = require('../utils');
+const { fixMoment, confi } = require('../utils');
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('separar')
     .setDescription('Comando para poner separacion en el canal de memes')
-    .setDefaultMemberPermissions(PFlags.MANAGE_MESSAGES),
+    .setDefaultMemberPermissions(PermissionsBitField.Flags.ManageMessages),
   // roles_req: [confi.monderatorId, '804900054153560084'],
   // perms_req: ['MANAGE_MESSAGES'],
   /**

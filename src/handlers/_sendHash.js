@@ -1,7 +1,7 @@
 const crypto = require('crypto');
 const https = require('https');
 const { Message } = require('discord.js');
-const { confi } = require('../../utils');
+const { confi } = require('../utils');
 
 /**
  * @param {Message} message
@@ -25,7 +25,7 @@ function sendHash(message, message2) {
         if (!hashDiges) return;
 
         try {
-          const { Hashes } = require('../../database');
+          const { Hashes } = require('../database');
           // const Hashes = require("../../database/models/hashes")(sequelize);
 
           await Hashes.create(

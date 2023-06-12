@@ -1,33 +1,35 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
 const {
-  MessageEmbed,
+  EmbedBuilder,
   CommandInteraction,
-  MessageButton,
-  MessageActionRow,
+  ButtonBuilder,
+  SlashCommandBuilder,
+  ActionRowBuilder,
+  PermissionsBitField,
+  ButtonStyle,
 } = require('discord.js');
 const moment = require('moment');
 const randomColor = require('randomcolor');
 const { Memes, Hashes } = require('../database');
-const { getSql, fixMoment, confi, PFlags } = require('../utils');
+const { getSql, fixMoment, confi } = require('../utils');
 
-const userBut = new MessageButton()
+const userBut = new ButtonBuilder()
   .setCustomId('userbut')
   .setLabel('Usuario')
-  .setStyle('PRIMARY');
-const modBut = new MessageButton()
+  .setStyle(ButtonStyle.Primary);
+const modBut = new ButtonBuilder()
   .setCustomId('modbut')
   .setLabel('Mod')
-  .setStyle('SUCCESS');
-const hashBut = new MessageButton()
+  .setStyle(ButtonStyle.Success);
+const hashBut = new ButtonBuilder()
   .setCustomId('gethash')
   .setLabel('GetHash')
-  .setStyle('DANGER');
+  .setStyle(ButtonStyle.Danger);
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('checkmeme')
     .setDescription('Comando para revisar un meme verificado')
-    .setDefaultMemberPermissions(PFlags.MANAGE_MESSAGES)
+    .setDefaultMemberPermissions(PermissionsBitField.Flags.ManageMessages)
     .addStringOption(option =>
       option
         .setName('id')
@@ -111,17 +113,17 @@ module.exports = {
     let linkButton;
     try {
       message = await interaction.channel.messages.fetch(targetId);
-      linkButton = new MessageButton()
+      linkButton = new ButtonBuilder()
         .setLabel('Volver')
         .setURL(message.url)
-        .setStyle('LINK');
+        .setStyle(ButtonStyle.Link);
     } catch (error) {
       console.log(
         'Hubo un error al intentar encontrar un msg (checkmeme1):',
         error,
       );
     }
-    const botonera = new MessageActionRow().addComponents(
+    const botonera = new ActionRowBuilder().addComponents(
       userBut,
       modBut,
       linkButton || '',
@@ -134,7 +136,7 @@ module.exports = {
       time: 15 * 60 * 1000,
     });
 
-    const embed = new MessageEmbed()
+    const embed = new EmbedBuilder()
       .setColor(randomColor())
       .setTitle('Ver Meme')
       .addFields(
@@ -222,8 +224,8 @@ module.exports = {
           hashes += `-**${index + 1}**: ` + rawModel.hash + '\n';
         });
 
-        const embed2 = new MessageEmbed()
-          .setColor('DARK_RED')
+        const embed2 = new EmbedBuilder()
+          .setColor('Dark_red')
           .setTitle('Hashes en este mensaje')
           .setDescription(
             hashes || 'Ninguno fue creado a partir de este mensaje.',

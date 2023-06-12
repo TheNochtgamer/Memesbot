@@ -1,4 +1,4 @@
-const { Permissions } = require('discord.js');
+const { PermissionsBitField } = require('discord.js');
 
 module.exports = {
   sendWebHook: require('./sendWebHook'),
@@ -27,6 +27,5 @@ module.exports = {
   eNames: require('./emotesNames'),
   ReplyTimer: require('./replyTimer'),
   confi: require('../config.json'),
-  PFlags: Permissions.FLAGS,
 };
 

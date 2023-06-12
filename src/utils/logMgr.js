@@ -1,4 +1,4 @@
-const { Client, MessageEmbed } = require('discord.js');
+const { Client, EmbedBuilder } = require('discord.js');
 const randomColor = require('randomcolor');
 
 module.exports = new (class LogMgr {
@@ -41,7 +41,7 @@ module.exports = new (class LogMgr {
     console.log(message);
 
     if (!toLogs) return;
-    const embed = new MessageEmbed()
+    const embed = new EmbedBuilder()
       .setDescription(message)
       .setColor(color || randomColor())
       .setTimestamp();

@@ -1,6 +1,6 @@
 const {
   WebhookClient,
-  MessageEmbed,
+  EmbedBuilder,
   Message,
   GuildMember,
 } = require('discord.js');
@@ -15,8 +15,8 @@ async function sendBackWebhook(message, { id: msg2id }, member) {
   if (!process.env.BACKWEBHOOKURL) return;
 
   const backwebhook = new WebhookClient({ url: process.env.BACKWEBHOOKURL });
-  const embed = new MessageEmbed()
-    .setColor('GREY')
+  const embed = new EmbedBuilder()
+    .setColor('Grey')
     .setAuthor({
       name: message.author.tag,
       iconURL: message.author.avatarURL(),

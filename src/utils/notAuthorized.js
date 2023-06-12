@@ -1,12 +1,12 @@
-const { MessageEmbed, CommandInteraction } = require('discord.js');
+const { EmbedBuilder, CommandInteraction } = require('discord.js');
 
 /**
  * @param {CommandInteraction} interaction
  * @returns
  */
 module.exports = async function noauthreply(interaction) {
-  const embed = new MessageEmbed()
-    .setColor('RED')
+  const embed = new EmbedBuilder()
+    .setColor('Red')
     .setAuthor({ name: '⛔Prohibido' })
     .setDescription(
       '```' +
@@ -24,3 +24,4 @@ module.exports = async function noauthreply(interaction) {
     }
   } catch (error) {}
 };
+
