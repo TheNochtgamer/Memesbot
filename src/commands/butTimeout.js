@@ -32,7 +32,7 @@ module.exports = {
       });
       return;
     }
-    if (member.permissions.has('MODERATE_MEMBERS')) {
+    if (member.permissions.has('ModerateMembers')) {
       await interaction.reply({
         content: `No podes aislar a esta persona ❌`,
         ephemeral: true,

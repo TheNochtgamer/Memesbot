@@ -22,7 +22,7 @@ module.exports = async function delnotauthorizedclip(message) {
   const guild = message.guild;
   const member = await guild.members.fetch(author.id);
   const memberPerms = channel.permissionsFor(member.id);
-  const canManageMessages = memberPerms.has('MANAGE_MESSAGES');
+  const canManageMessages = memberPerms.has('ManageMessages');
   const memberModRole = member.roles.cache.some(
     role => role.id === confi.monderatorId,
   );

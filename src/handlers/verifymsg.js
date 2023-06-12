@@ -55,7 +55,7 @@ module.exports = async function verifymsg(reaction, user) {
   const files = message.attachments.map(attachment => attachment.attachment);
   const canManageMessages = channel
     .permissionsFor(member.id)
-    .has('MANAGE_MESSAGES');
+    .has('ManageMessages');
   const memberModRole = member.roles.cache.some(
     role => role.id === confi.monderatorId,
   );
