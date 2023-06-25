@@ -2,7 +2,7 @@
 const {
   CommandInteraction,
   SlashCommandBuilder,
-  PermissionsBitField,
+  PermissionFlagsBits,
 } = require('discord.js');
 const { save } = require('../utils/configMgr.js');
 const { confi, logme } = require('../utils/index.js');
@@ -11,7 +11,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('change')
     .setDescription('Dev')
-    .setDefaultMemberPermissions(PermissionsBitField.Flags.Administrator)
+    .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
     .addSubcommand(subcommand =>
       subcommand
         .setName('set')
@@ -70,14 +70,15 @@ module.exports = {
             ),
         ),
     ),
-  perms_req: ['ADMINISTRATOR'],
+  perms_req: [PermissionFlagsBits.Administrator],
+
   /**
    * @param {CommandInteraction} interaction
    * @returns
    */
   async run(interaction) {
     await interaction.deferReply({ ephemeral: true });
-    const var0 = interaction.options.getString('variable');
+    const var0 = interaction.options.get('variable', true).value;
     const sub = interaction.options.getSubcommand();
     let InteractDefRly = true;
 
@@ -133,7 +134,7 @@ module.exports = {
     }
 
     if (sub === 'set') {
-      const var1 = interaction.options.getString('valor');
+      const var1 = interaction.options.get('valor').value;
 
       switch (var0) {
         case '0':

@@ -1,5 +1,3 @@
-const { PermissionsBitField } = require('discord.js');
-
 module.exports = {
   sendWebHook: require('./sendWebHook'),
   notAuthorized: require('./notAuthorized'),

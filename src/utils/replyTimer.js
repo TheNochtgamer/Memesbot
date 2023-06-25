@@ -5,7 +5,7 @@ class ReplyTimer {
   constructor(interval) {
     this.interval = interval;
     this.timerOn = false;
-    this.available.bind(this);
+    this.available = this.available.bind(this);
   }
 
   available() {

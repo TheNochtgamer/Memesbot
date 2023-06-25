@@ -4,10 +4,9 @@ const {
   ButtonBuilder,
   ContextMenuCommandBuilder,
   ActionRowBuilder,
-  PermissionsBitField,
+  PermissionFlagsBits,
 } = require('discord.js');
 const moment = require('moment');
-const randomColor = require('randomcolor');
 const { Memes, Hashes } = require('../database');
 const { getSql, fixMoment, confi } = require('../utils');
 const { ButtonStyle } = require('discord.js');
@@ -29,7 +28,7 @@ module.exports = {
   data: new ContextMenuCommandBuilder()
     .setName('Check Meme')
     .setType(3)
-    .setDefaultMemberPermissions(PermissionsBitField.Flags.ManageMessages),
+    .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages),
   // roles_req: [confi.monderatorId, '804900054153560084'],
   // perms_req: ['MANAGE_MESSAGES'],
   /**
@@ -112,7 +111,7 @@ module.exports = {
     });
 
     const embed = new EmbedBuilder()
-      .setColor(randomColor())
+      .setColor('Random')
       .setTitle('Ver Meme')
       .addFields(
         {

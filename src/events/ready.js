@@ -1,7 +1,7 @@
-const { Client } = require("discord.js");
+const { Client } = require('discord.js');
 
 module.exports = {
-  name: "ready",
+  name: 'ready',
   /**
    * @param {Client} bot
    */

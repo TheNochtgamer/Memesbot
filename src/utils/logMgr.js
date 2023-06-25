@@ -1,5 +1,4 @@
 const { Client, EmbedBuilder } = require('discord.js');
-const randomColor = require('randomcolor');
 
 module.exports = new (class LogMgr {
   /**
@@ -43,7 +42,7 @@ module.exports = new (class LogMgr {
     if (!toLogs) return;
     const embed = new EmbedBuilder()
       .setDescription(message)
-      .setColor(color || randomColor())
+      .setColor(color || 'Random')
       .setTimestamp();
     if (typeof toLogs !== 'boolean') {
       embed.setDescription(toLogs);

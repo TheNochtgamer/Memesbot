@@ -1,16 +1,17 @@
 const {
   CommandInteraction,
   SlashCommandBuilder,
-  PermissionsBitField,
+  PermissionFlagsBits,
 } = require('discord.js');
 const { save } = require('../utils/configMgr.js');
 const { confi } = require('../utils/index.js');
+const { ActivityType } = require('discord.js');
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('activity')
     .setDescription('Establece la actividad actual del bot')
-    .setDefaultMemberPermissions(PermissionsBitField.Flags.ManageMessages)
+    .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages)
     .addSubcommand(subcommand =>
       subcommand
         .setName('set')
@@ -26,11 +27,11 @@ module.exports = {
             .setName('type')
             .setDescription('El tipo de la actividad')
             .addChoices(
-              { name: 'COMPETING', value: 'COMPETING' },
-              { name: 'LISTENING', value: 'LISTENING' },
-              { name: 'PLAYING', value: 'PLAYING' },
-              { name: 'STREAMING', value: 'STREAMING' },
-              { name: 'WATCHING', value: 'WATCHING' },
+              { name: 'COMPETING', value: 'Competing' },
+              { name: 'LISTENING', value: 'Listening' },
+              { name: 'PLAYING', value: 'Playing' },
+              { name: 'STREAMING', value: 'Streaming' },
+              { name: 'WATCHING', value: 'Watching' },
             ),
         )
         .addStringOption(option =>
@@ -78,13 +79,13 @@ module.exports = {
         });
       }
     } else if (subCom === 'set') {
-      const var0 = interaction.options.getString('actividad');
-      const var1 = interaction.options.getString('type');
-      const var2 = interaction.options.getString('url');
+      const var0 = interaction.options.get('actividad', true).value;
+      const var1 = interaction.options.get('type')?.value;
+      const var2 = interaction.options.get('url')?.value;
 
       try {
         interaction.client.user.setPresence({
-          activities: [{ name: var0, type: var1, url: var2 }],
+          activities: [{ name: var0, type: ActivityType[var1], url: var2 }],
         });
         confi.activity0 = var0;
         confi.activity1 = var1;

@@ -2,7 +2,7 @@ const {
   CommandInteraction,
   EmbedBuilder,
   SlashCommandBuilder,
-  PermissionsBitField,
+  PermissionFlagsBits,
 } = require('discord.js');
 const moment = require('moment');
 let statsCache = { timeout: moment().subtract(60, 's'), value: null };
@@ -11,7 +11,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('stats')
     .setDescription('Ver las estadisticas de memes')
-    .setDefaultMemberPermissions(PermissionsBitField.Flags.ManageMessages)
+    .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages)
     .addStringOption(option =>
       option
         .setName('periodo')
@@ -35,7 +35,7 @@ module.exports = {
    */
   async run(interaction) {
     const now = moment();
-    const periodo = interaction.options.getString('periodo')?.split(':') || [
+    const periodo = interaction.options.get('periodo')?.value?.split(':') || [
       '1',
       '24h',
     ];

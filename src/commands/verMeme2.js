@@ -4,11 +4,10 @@ const {
   ButtonBuilder,
   SlashCommandBuilder,
   ActionRowBuilder,
-  PermissionsBitField,
+  PermissionFlagsBits,
   ButtonStyle,
 } = require('discord.js');
 const moment = require('moment');
-const randomColor = require('randomcolor');
 const { Memes, Hashes } = require('../database');
 const { getSql, fixMoment, confi } = require('../utils');
 
@@ -29,21 +28,21 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('checkmeme')
     .setDescription('Comando para revisar un meme verificado')
-    .setDefaultMemberPermissions(PermissionsBitField.Flags.ManageMessages)
+    .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages)
     .addStringOption(option =>
       option
         .setName('id')
         .setDescription('El id del mensaje para revisar')
         .setRequired(true),
     ),
-  // roles_req: [confi.monderatorId, '804900054153560084'],
-  // perms_req: ['MANAGE_MESSAGES'],
+
   /**
    * @param {CommandInteraction} interaction
    * @returns
    */
   async run(interaction) {
-    const targetId = interaction.options.getString('id');
+    const targetId = interaction.options.get('id')?.value;
+
     const guild = interaction.guild;
     const endChannel = guild.channels.cache.find(
       canal => canal.id === confi.channelEndId,
@@ -137,7 +136,7 @@ module.exports = {
     });
 
     const embed = new EmbedBuilder()
-      .setColor(randomColor())
+      .setColor('Random')
       .setTitle('Ver Meme')
       .addFields(
         {
@@ -225,7 +224,7 @@ module.exports = {
         });
 
         const embed2 = new EmbedBuilder()
-          .setColor('Dark_red')
+          .setColor('DarkRed')
           .setTitle('Hashes en este mensaje')
           .setDescription(
             hashes || 'Ninguno fue creado a partir de este mensaje.',

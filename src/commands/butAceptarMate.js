@@ -15,6 +15,7 @@ module.exports = {
       .setLabel('Aceptar')
       .setStyle(ButtonStyle.Primary);
   },
+
   /**
    * @param {ButtonInteraction} interaction
    */

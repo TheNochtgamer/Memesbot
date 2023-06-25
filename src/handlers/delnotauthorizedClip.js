@@ -73,4 +73,3 @@ module.exports = async function delnotauthorizedclip(message) {
     }
   }, 16000);
 };
-

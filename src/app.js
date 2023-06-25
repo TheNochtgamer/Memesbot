@@ -8,6 +8,7 @@ const {
 } = require('discord.js');
 const configMgr = require('./utils/configMgr.js');
 const { sleep, ReplyTimer, confi, logme } = require('./utils');
+const { ActivityType } = require('discord.js');
 require('./utils/stringPlaceHolders');
 
 const client = new Client({
@@ -61,7 +62,7 @@ function estadoUser() {
     activities: [
       {
         name: confi.activity0 || null,
-        type: confi.activity1 || null,
+        type: ActivityType[confi.activity1] || null,
         url: confi.activity2 || null,
       },
     ],

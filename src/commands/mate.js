@@ -8,7 +8,7 @@ const mins = 10 * 60 * 1000;
 
 module.exports = {
   data: new ContextMenuCommandBuilder().setName('Dar Un Mate').setType(2),
-  // roles_req: ['941908888113008741', '803293274672332880', '898615642389897296', '617380124106555392', '777691011316449291'],
+
   /**
    * @param {ContextMenuInteraction} interaction
    */

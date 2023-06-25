@@ -16,14 +16,13 @@ module.exports = {
         .setDescription('Darle un mate a esta persona')
         .setRequired(true),
     ),
-  // roles_req: ['941908888113008741', '803293274672332880', '898615642389897296', '617380124106555392', '777691011316449291'],
+
   /**
    * @param {CommandInteraction} interaction
    */
   async run(interaction) {
     const userId = interaction.user.id;
-    const targetUser = interaction.options.getUser('user');
-    const otherUserId = targetUser.id;
+    const targetUser = interaction.options.getUser('user', true);
     const aceptBut = require('./butAceptarMate.js').button();
     const aceptRow = new ActionRowBuilder().addComponents(aceptBut);
     const respuestas = [
@@ -42,7 +41,7 @@ module.exports = {
         return;
       }
 
-      if (userId === otherUserId) {
+      if (userId === targetUser.id) {
         await interaction.reply({
           content: 'Enserio vas a hacer tanto escandalo para tomar mate solo?.',
           ephemeral: true,

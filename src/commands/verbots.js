@@ -3,7 +3,6 @@ const {
   SlashCommandBuilder,
   CommandInteraction,
 } = require('discord.js');
-const randomColor = require('randomcolor');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -30,7 +29,7 @@ module.exports = {
     const embed = new EmbedBuilder()
       .setTitle('Bots disponibles:')
       .setDescription(reply)
-      .setColor(randomColor());
+      .setColor('Random');
     if (replyOff)
       embed.addFields({
         name: 'Bots offline:',

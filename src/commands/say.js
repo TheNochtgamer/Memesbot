@@ -1,7 +1,7 @@
 const {
   CommandInteraction,
   SlashCommandBuilder,
-  PermissionsBitField,
+  PermissionFlagsBits,
 } = require('discord.js');
 const { logme } = require('../utils');
 
@@ -9,7 +9,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('say')
     .setDescription('Enviar mensajes')
-    .setDefaultMemberPermissions(PermissionsBitField.Flags.ManageMessages)
+    .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages)
     .addStringOption(option =>
       option
         .setName('mensaje')
@@ -33,9 +33,10 @@ module.exports = {
    * @returns
    */
   async run(interaction) {
-    let msg = interaction.options.getString('mensaje', true).placeHolders();
-    const toEdit = interaction.options.getString('edit');
-    const toReply = interaction.options.getString('reply');
+    let msg = interaction.options.get('mensaje', true)?.value?.placeHolders();
+    const toEdit = interaction.options.get('edit')?.value;
+    const toReply = interaction.options.get('reply')?.value;
+
     const channel = interaction.channel;
 
     if (!toEdit) {

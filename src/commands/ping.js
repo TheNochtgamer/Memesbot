@@ -5,7 +5,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('ping')
     .setDescription('Te dice pong..'),
-  // .setDefaultMemberPermissions(PermissionsBitField.Flags.View_channels),
+  // .setDefaultMemberPermissions(PermissionFlagsBits.View_channels),
   // roles_req: ['958202026037239881', '965388862576816168'],
   // perms_req: ['ADMINISTRATOR'],
   // allRoles_req: false,

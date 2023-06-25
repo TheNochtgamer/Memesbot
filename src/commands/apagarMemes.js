@@ -1,7 +1,7 @@
 const {
   CommandInteraction,
   SlashCommandBuilder,
-  PermissionsBitField,
+  PermissionFlagsBits,
 } = require('discord.js');
 const moment = require('moment');
 const { confi, logme } = require('../utils/index.js');
@@ -13,7 +13,7 @@ module.exports = {
     .setDescription(
       'Bloquea el canal de memes sin que nadie pueda verificar mas memes',
     )
-    .setDefaultMemberPermissions(PermissionsBitField.Flags.ManageMessages)
+    .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages)
     .addSubcommand(subcommand =>
       subcommand
         .setName('memes')
@@ -21,8 +21,7 @@ module.exports = {
           'Bloquea el canal de memes sin que nadie pueda verificar mas memes',
         ),
     ),
-  // roles_req: [confi.monderatorId],
-  // perms_req: ['MANAGE_MESSAGES'],
+
   /**
    * @param {CommandInteraction} interaction
    * @returns

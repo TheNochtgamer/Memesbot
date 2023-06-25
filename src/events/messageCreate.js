@@ -9,6 +9,7 @@ const {
   autoPublishAnnounce,
   respuestas,
 } = require('../handlers');
+const { ChannelType } = require('discord.js');
 
 module.exports = {
   name: 'messageCreate',
@@ -26,7 +27,7 @@ module.exports = {
     if (confi?.channelClipsId) delnotauthorizedclip(message);
     secret(message);
     if (
-      message.channel.type === 'DM' &&
+      message.channel.type === ChannelType.DM &&
       message.author.id === message.client.owner
     )
       dmControl(message);

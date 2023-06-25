@@ -3,6 +3,7 @@ const {
   ButtonInteraction,
   MessageMentions: { USERS_PATTERN },
   ButtonStyle,
+  PermissionFlagsBits,
 } = require('discord.js');
 const { logme } = require('../utils');
 
@@ -14,7 +15,8 @@ module.exports = {
       .setLabel('⏲️')
       .setStyle(ButtonStyle.Danger);
   },
-  perms_req: ['MODERATE_MEMBERS'],
+  perms_req: [PermissionFlagsBits.ModerateMembers],
+
   /**
    * @param {ButtonInteraction} interaction
    */

@@ -25,7 +25,7 @@ module.exports = {
    */
   async run(interaction) {
     const user = interaction.options.getUser('mencion');
-    const spoiler = interaction.options.getString('spoiler') || '0';
+    const spoiler = interaction.options.get('spoiler')?.value || '0';
     const palasIds = ['982489887091621950', '988161502060085268'];
     const embed = new EmbedBuilder()
       .setColor('Red')
@@ -40,7 +40,7 @@ module.exports = {
     const copysChannel = await client.channels.fetch('982486981990817793');
     // let msg = await copysChannel.messages.fetch(palasIds[Math.floor(Math.random() * palasIds.length)]);
     let msg;
-    if (spoiler === 0) {
+    if (spoiler === '0') {
       msg = await copysChannel.messages.fetch(palasIds[0]);
     } else {
       msg = await copysChannel.messages.fetch(palasIds[1]);

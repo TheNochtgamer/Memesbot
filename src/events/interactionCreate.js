@@ -8,8 +8,7 @@ module.exports = {
    * @returns
    */
   async run(interaction) {
-    if (!(interaction.isCommand() || interaction.isApplicationCommand()))
-      return;
+    if (!interaction.isCommand()) return;
 
     const command = interaction.client.commands.get(interaction.commandName);
     interaction.client.totalInteractions++;
@@ -161,3 +160,4 @@ module.exports = {
     }
   },
 };
+
